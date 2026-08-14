@@ -14,9 +14,11 @@
   "type": "module",
   "dependencies": {
     "@supabase/supabase-js": "^2.108.2",
+    "@types/nodemailer": "^8.0.1",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "nodemailer": "^9.0.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
@@ -24,5 +26,13 @@
     "@types/node": "^26.0.1",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reddy-py/topgrade-backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Reddy-py/topgrade-backend/issues"
+  },
+  "homepage": "https://github.com/Reddy-py/topgrade-backend#readme"
 }
