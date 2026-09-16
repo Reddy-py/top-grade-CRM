@@ -12,7 +12,8 @@
 
 | Role | Full Name | Login Email | Password | Access Portal |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADMIN** | System Administrator | `admin@topgrade.edu` | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
+| **ADMIN** | System Administrator | `topgradelearning101@gmail.com` (or `admin@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
+| **ACCOUNTANT** | Priya Sharma | `sivareddy683970@gmail.com` (or `accountant@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
 
 * **Privileges**: Super Administrator with full permissions (Schedule Management, Teacher Faculty Management, Student Admissions & Enrollment, Billing & Invoicing, Course Catalog Administration).
 
