@@ -23,7 +23,7 @@ PORT=5000
 SUPABASE_URL=https://your-supabase-project.supabase.co
 SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-role-key
 SUPABASE_JWT_SECRET=your-supabase-jwt-secret-key
-GMAIL_USER=sivareddy683970@gmail.com
+GMAIL_USER=tglbiz101@gmail.com
 GMAIL_APP_PASSWORD=your-gmail-16-char-app-password
 ```
 
@@ -43,8 +43,8 @@ TopGrade CRM provides 5 default role accounts for testing and verification:
 
 | Role | Email Credential | Default Password | Primary Portal & Capabilities |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `topgrade101@gmail.com` (or `topgradelearning101@gmail.com`) | `TopGrade2026!` | Full CRM Control, Omnichannel Enquiries Hub, Admin Takeover, Campaign Dispatcher. |
-| **Accountant** | `sivareddy683970@gmail.com` (or `accountant@topgrade.edu`) | `TopGrade2026!` | Fee Ledgers, Cheque Scanning Metadata, Line-Item Promotional Discounts, Payment Receipts. |
+| **Admin** | `tglbiz101@gmail.com` (or `admin@topgrade.edu`) | `TopGrade2026!` | Full CRM Control, Omnichannel Enquiries Hub, Admin Takeover, Campaign Dispatcher. |
+| **Accountant** | `sivareddy68397@gmail.com` (or `accountant@topgrade.edu`) | `TopGrade2026!` | Fee Ledgers, Cheque Scanning Metadata, Line-Item Promotional Discounts, Payment Receipts. |
 | **Teacher** | `teacher@topgrade.edu` | `TopGrade2026!` | Assigned Course Tracks, Weekly Capacity Progress Bar, Google Drive Link & Photo Release Waiver. |
 | **Parent** | `parent@topgrade.edu` | `TopGrade2026!` | Multi-Child Account Switcher (Rahul & Ananya), Presence Rate %, Fee Receipts, Reschedule Trigger, 3 Digital Waivers Modal. |
 | **Student** | `student@topgrade.edu` | `TopGrade2026!` | Personal Course Schedule, Dynamic Age (DOB-calculated), Attendance Logs, Verified Media Status. |

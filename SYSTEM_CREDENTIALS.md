@@ -12,8 +12,8 @@
 
 | Role | Full Name | Login Email | Password | Access Portal |
 | :--- | :--- | :--- | :--- | :--- |
-| **ADMIN** | System Administrator | `topgradelearning101@gmail.com` (or `admin@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
-| **ACCOUNTANT** | Priya Sharma | `sivareddy683970@gmail.com` (or `accountant@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
+| **ADMIN** | System Administrator | `tglbiz101@gmail.com` (or `admin@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
+| **ACCOUNTANT** | Priya Sharma | `sivareddy68397@gmail.com` (or `accountant@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
 
 * **Privileges**: Super Administrator with full permissions (Schedule Management, Teacher Faculty Management, Student Admissions & Enrollment, Billing & Invoicing, Course Catalog Administration).
 
@@ -134,7 +134,7 @@
 | 78 | **TG-STU-2026-5067** | **Charlotte** | `charlotte.5067@student.topgrade.edu`<br>*(or `TG-STU-2026-5067`)* | `Student@TopGrade2026` | +1 713 823 6790 | Math (grade 12) • Manvel HS | Frank Fernandez | `ftfern24@yahoo.com`<br>*(or `parent.frank.fernandez.5067@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
 | 79 | **TG-STU-2026-5068** | **Charlie** | `charlie.5068@student.topgrade.edu`<br>*(or `TG-STU-2026-5068`)* | `Student@TopGrade2026` | +1 401 743 9608 | Reading (grade 4) • Massey ranch | Liz Rodwell | `elizabethannrodwell@gmail.com`<br>*(or `parent.liz.rodwell.5068@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
 | 80 | **TG-STU-2026-9717** | **harshith pabisetty** | `std-1788241892654@topgrade.edu`<br>*(or `TG-STU-2026-9717`)* | `Student@TopGrade2026` | +1 5818585656 | Python Beginners & Logic | sathish | `parent.sathish.9717@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 81 | **TG-STU-2026-3044** | **Pari Upadhyaya** | `riaupadhyaya3@gmail.com`<br>*(or `TG-STU-2026-3044`)* | `Student@TopGrade2026` | +1 346 822 8020 | English & Writing | Jignesh Upadhyaya | `topgradelearning101@gmail.com`<br>*(or `parent.jignesh.upadhyaya.3044@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
+| 81 | **TG-STU-2026-3044** | **Pari Upadhyaya** | `riaupadhyaya3@gmail.com`<br>*(or `TG-STU-2026-3044`)* | `Student@TopGrade2026` | +1 346 822 8020 | English & Writing | Jignesh Upadhyaya | `tglbiz101@gmail.com`<br>*(or `parent.jignesh.upadhyaya.3044@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
 
 ---
 
