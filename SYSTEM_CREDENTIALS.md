@@ -1,160 +1,175 @@
-# TopGrade CRM — Master System Login Credentials Directory
+# TopGrade CRM — Official Parent & Student Credential Directory & Access Control Guide
 
-> **System Instance**: TopGrade CRM Production & Staging  
-> **Date Generated**: September 14, 2026  
-> **Total Verified Accounts**: **1 Administrator** | **17 Faculty Teachers** | **80 Students** | **Active Parent Portals**  
-> **Multi-Child Sibling Management**: Fully Configured (9 families with multiple children linked to unified parent accounts)  
-> **Supabase Auth Status**: Verified & Authenticated (100% Active)
-
----
-
-## 1. System Administrator Login
-
-| Role | Full Name | Login Email | Password | Access Portal |
-| :--- | :--- | :--- | :--- | :--- |
-| **ADMIN** | System Administrator | `tglbiz101@gmail.com` (or `admin@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
-| **ACCOUNTANT** | Priya Sharma | `sivareddy68397@gmail.com` (or `accountant@topgrade.edu`) | `TopGrade2026!` | [http://localhost:5174/login](http://localhost:5174/login) |
-
-* **Privileges**: Super Administrator with full permissions (Schedule Management, Teacher Faculty Management, Student Admissions & Enrollment, Billing & Invoicing, Course Catalog Administration).
+> **System Version:** 2026.3 • **Database Engine:** Supabase PostgreSQL + Auth  
+> **Total Active Students:** 73  
+> **Total Registered Parent Accounts:** 129 (Personal PNG Emails & @parents.topgradeteacher.edu Portal Logins)  
+> **Status:** Live & Synchronized
 
 ---
 
-## 2. Faculty Teachers (17 Official Teachers)
+## 1. Security & RBAC Isolation Policies
 
-> **Standard Teacher Password**: `TopGrade@2026!`  
-> All 17 teacher accounts have been fully created and linked in Supabase `auth.users`, `teachers`, and `profiles` tables.
+### 🔒 Parent Role Isolation (`PARENT`)
+1. **Child Privacy:** When a parent logs in, they **strictly and solely see their own children** linked by family name, phone number, and verified email address. Under no circumstances can a parent view or access records of another family's child.
+2. **Course Syllabus Isolation:**
+   - **Parent Dashboard:** Displays exclusively the courses enrolled by their child(ren).
+   - **Courses & Curriculum Page (`/courses`):** Enforces a strict filter where only the specific course streams selected by their child(ren) are visible. All other school courses in the general catalog are hidden.
+3. **Multi-Child Families:** Parents with multiple enrolled children (e.g., *Dhara Desai* with *Dhyana* and *Aarshiv*; *Lani Mercado* with *Kiron* and *Cara*; *Florence Buaku* with *Isabelle* and *Julia*) can switch between their children seamlessly in the parent portal.
+4. **Dual Guardians / Secondary Parents:** Secondary parents with separate contact entries (e.g., *Sandeep Duggal* for *Deven*, *Conner Kuzniar* for *Ethan*, *Ulaysha Gibbs* for *Ulaysha*, *Vondeah Grant* for *Brooke*) can log in using their own credentials and access their family's child dossier and courses.
 
-| # | Teacher ID | Teacher Name | Login Email | Default Password | Phone | Specialization | Delivery Method | Location |
-| :-: | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | **TG-FAC-101** | **Ms. Jamie Dawson** | `jldaeb1000@gmail.com` | `TopGrade@2026!` | +1 832-315-1251 | Online Instruction & Academic Mentoring | online | Alvin, Texas |
-| 2 | **TG-FAC-102** | **Ms. Shahrazad Polk** | `sha.polk20@gmail.com` | `TopGrade@2026!` | +1 281-995-0685 | In-Center Tutoring & Standard Curriculum | in center | Pearland, Texas |
-| 3 | **TG-FAC-103** | **Ms. Annalisa Jaimes** | `annalisa.jaimes@gmail.com` | `TopGrade@2026!` | +1 832-542-1864 | In-Person Classroom & Foundations | InPerson | Angleton, Texas |
-| 4 | **TG-FAC-104** | **Ms. Laura Gorham** | `laura_gorham@yahoo.com` | `TopGrade@2026!` | +1 713-498-6884 | In-Center Elementary & Middle School | in center | Pearland, Texas |
-| 5 | **TG-FAC-105** | **Mr. Jignesh Upadhyaya** | `jigneshu2004@yahoo.com` | `TopGrade@2026!` | +1 281-760-6386 | Mathematics, Physics & Test Prep | in center | Pearland, Texas |
-| 6 | **TG-FAC-106** | **Mrs. Katrina Baines** | `katrina.baines@yahoo.com` | `TopGrade@2026!` | +1 832-641-5525 | Language Arts, Reading & Writing | in center | Houston, Texas |
-| 7 | **TG-FAC-107** | **Ms. Chloe Self** | `chloe.r.self@gmail.com` | `TopGrade@2026!` | +1 832-600-1004 | STEM, Chemistry & Accelerated Learning | in center | Sugar Land, Texas |
-| 8 | **TG-FAC-108** | **Mr. Abel Dominguez** | `abeldominguez10000@gmail.com` | `TopGrade@2026!` | +1 832-288-7224 | Mathematics & Physical Sciences | in center | Houston, Texas |
-| 9 | **TG-FAC-109** | **Mrs. Patricia Landrum** | `tclandrum@hotmail.com` | `TopGrade@2026!` | +1 713-899-7890 | Language Arts, STAAR & Study Skills | in center | Pearland, Texas |
-| 10 | **TG-FAC-110** | **Ms. Logan Fenner** | `fennelog@gmail.com` | `TopGrade@2026!` | +1 936-900-9302 | Algebra, Calculus & Geometry | in center | Houston, Texas |
-| 11 | **TG-FAC-111** | **Mr. Achalesh Amar** | `achalesh@gmail.com` | `TopGrade@2026!` | +1 713-357-8216 | Social Sciences, History & Humanities | in center | Pearland, Texas |
-| 12 | **TG-FAC-112** | **Ms. Nicole Abner** | `nicoleabner1@gmail.com` | `TopGrade@2026!` | +1 713-819-4727 | Primary & Middle School Foundations | in center | Manvel, Texas |
-| 13 | **TG-FAC-113** | **Mrs. Paula Isaac** | `mrspisaac2022@gmail.com` | `TopGrade@2026!` | +1 501-519-2000 | Hybrid Online & On-Campus Tutoring | Any | Houston, Texas |
-| 14 | **TG-FAC-114** | **Ms. Tamara Gipson** | `tamaratechbytes@gmail.com` | `TopGrade@2026!` | +1 281-755-0107 | Coding, 3D Printing & Applied Tech | InPerson | Houston, Texas |
-| 15 | **TG-FAC-115** | **Ms. Deja Getwood** | `dejagetwood15@gmail.com` | `TopGrade@2026!` | +1 409-365-5283 | Spanish, French & World Languages | Any | Houston, Texas |
-| 16 | **TG-FAC-116** | **Ms. Kerry Rails** | `kag9181@gmail.com` | `TopGrade@2026!` | +1 409-497-1722 | Economics, Government & Social Sciences | Any | Houston, Texas |
-| 17 | **TG-FAC-117** | **Mr. Ryon Davis** | `davisryon@gmail.com` | `TopGrade@2026!` | +1 972-489-9296 | High School STEM & SAT/ACT Prep | Any | Houston, Texas |
+### 🎓 Student Role Isolation (`STUDENT`)
+1. **Student Login Identifier:** Students can authenticate using either their official **Student Code** (e.g., `TG-STU-2026-5001`) or their student email (e.g., `jacob.5001@student.topgrade.edu`).
+2. **Profile & Performance:** Students have view-only access to their own attendance, timetable schedule, academic reports, and syllabus.
+3. **Course Curriculum:** Under `/courses`, students see **only their enrolled course stream(s)**.
 
 ---
 
-## 3. Students & Parents (81 Active Students, including Sibling Accounts)
+## 2. Authentication Standards
 
-> **Standard Student Password**: `Student@TopGrade2026`  
-> **Standard Parent Password**: `Parent@TopGrade2026`  
-> **Sibling Management**: Parents with multiple children (e.g. Annie Smith with Sophie and Dahlia) can log into their Parent Portal with their email and see/switch between all their children from the top Child Switcher tab!
-
-| # | Student ID | Student Name | Student Login Email / ID | Student Password | Phone | Course / Track | Parent Name | Parent Login Email(s) | Parent Password |
-| :-: | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| 1 | **TG-STU-2026-3632** | **Siva Reddy** | `sivareddy683970@gmail.com`<br>*(or `TG-STU-2026-3632`)* | `Student@TopGrade2026` | +1 7780648562 | General Academic Track | Venakat | `parent.venakat.3632@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 2 | **TG-STU-2026-4231** | **rajesh ganta** | `rajeshganta@gmail.com`<br>*(or `TG-STU-2026-4231`)* | `Student@TopGrade2026` | +1 1234567894 | General Academic Track | srinu | `parent.srinu.4231@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 3 | **TG-STU-2026-5001** | **Jacob** | `jacob.5001@student.topgrade.edu`<br>*(or `TG-STU-2026-5001`)* | `Student@TopGrade2026` | +1 832 209 9729 | Reading Comp (Grade 5) • Sablatura | Tanyea Fowls | `tanyeafowls@yahoo.com`<br>*(or `parent.tanyea.fowls.5001@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 4 | **TG-STU-2026-5002** | **Kamauri Hunter** | `kamauri.hunter.5002@student.topgrade.edu`<br>*(or `TG-STU-2026-5002`)* | `Student@TopGrade2026` | +1 832 322 2239 | Reading (grade K) • IL Texas | Angel Lewis | `missyou1970@yahoo.com`<br>*(or `parent.angel.lewis.5002@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 5 | **TG-STU-2026-5003** | **Tierra Perry** | `tierra.perry.5003@student.topgrade.edu`<br>*(or `TG-STU-2026-5003`)* | `Student@TopGrade2026` | +1 832 888 8512 | General Track | Self-Enrolled | `parent.tierra.perry.5003@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 6 | **TG-STU-2026-5004** | **Camila** | `camila.5004@student.topgrade.edu`<br>*(or `TG-STU-2026-5004`)* | `Student@TopGrade2026` | +1 832 276 2098 | Reading (Grade 3) • Lahon elem, | DULCE Eduardo Garcia | `gdulce955@gmail.com`<br>*(or `parent.dulce.eduardo.garcia.5004@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 7 | **TG-STU-2026-5005** | **Giselle** | `giselle.5005@student.topgrade.edu`<br>*(or `TG-STU-2026-5005`)* | `Student@TopGrade2026` | +1 832 589 3676 | Afterschool (grade 4) • Rogers | Elizabeth Guillory | `guilloryea@gmail.com`<br>*(or `parent.elizabeth.guillory.5005@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 8 | **TG-STU-2026-5006** | **Leandro** | `leandro.5006@student.topgrade.edu`<br>*(or `TG-STU-2026-5006`)* | `Student@TopGrade2026` | +1 832 431 1633 | Afterschool (grade 4) • Silverlake | Esperanza garcia | `esperanzagarciaovalle@gmail.com`<br>*(or `parent.esperanza.garcia.5006@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 9 | **TG-STU-2026-5007** | **Kiron Mercado** | `kiron.5007@student.topgrade.edu`<br>*(or `TG-STU-2026-5007`)* | `Student@TopGrade2026` | +1 713 319 8985 | Afterschool (Grade 4 • Silverlake) | Lani Mercado | `lani.garrido@gmail.com`<br>*(or `parent.lani.mercado.5007@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 10 | **TG-STU-2026-5007-B** | **Cara Mercado** | `cara.5007b@student.topgrade.edu`<br>*(or `TG-STU-2026-5007-B`)* | `Student@TopGrade2026` | +1 713 319 8985 | Afterschool (Grade 2 • Silverlake) | Lani Mercado | `lani.garrido@gmail.com`<br>*(or `parent.lani.mercado.5007@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 11 | **TG-STU-2026-5008** | **Evelyn** | `evelyn.5008@student.topgrade.edu`<br>*(or `TG-STU-2026-5008`)* | `Student@TopGrade2026` | +1 626 808 2351 | Afterschool (grade K) • Silvercrest | Anna Jan | `annasjan@gmail.com`<br>*(or `parent.anna.jan.5008@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 12 | **TG-STU-2026-5009** | **CJ** | `cj.5009@student.topgrade.edu`<br>*(or `TG-STU-2026-5009`)* | `Student@TopGrade2026` | +1 904 226 8065 | Reading (grade 3) | Chad Williams | `chad8404@gmail.com`<br>*(or `parent.chad.williams.5009@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 13 | **TG-STU-2026-5010** | **Ethan Kuzniar** | `ethan.kuzniar.5010@student.topgrade.edu`<br>*(or `TG-STU-2026-5010`)* | `Student@TopGrade2026` | +1 832 344 7553 | STAAR (grade 4) | Yoselin Kuzniar | `yosyaranda18@gmail.com`<br>*(or `parent.yoselin.kuzniar.5010@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 14 | **TG-STU-2026-5011** | **Conner Kuzniar** | `conner.kuzniar.5011@student.topgrade.edu`<br>*(or `TG-STU-2026-5011`)* | `Student@TopGrade2026` | +1 713 208 0947 | General Track | Self-Enrolled | `conner.skuzniar@gmail.com`<br>*(or `parent.conner.kuzniar.5011@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 15 | **TG-STU-2026-5012** | **Minh** | `minh.5012@student.topgrade.edu`<br>*(or `TG-STU-2026-5012`)* | `Student@TopGrade2026` | +1 281 617 9583 | Afterschool (grade K) • Silverlake elem | Loan Nguyen | `nloan969@gmail.com`<br>*(or `parent.loan.nguyen.5012@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 16 | **TG-STU-2026-5013** | **Tu Hyunh** | `tu.hyunh.5013@student.topgrade.edu`<br>*(or `TG-STU-2026-5013`)* | `Student@TopGrade2026` | +1 714 261 6170 | General Track | Self-Enrolled | `tuhuynh0046@gmail.com`<br>*(or `parent.tu.hyunh.5013@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 17 | **TG-STU-2026-5014** | **Peyton** | `peyton.5014@student.topgrade.edu`<br>*(or `TG-STU-2026-5014`)* | `Student@TopGrade2026` | +1 334 372 5625 | Afterschool (grade 5) • Rogers | Alexis Merritt | `megul41@gmail.com`<br>*(or `parent.alexis.merritt.5014@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 18 | **TG-STU-2026-5015** | **Uriel** | `uriel.5015@student.topgrade.edu`<br>*(or `TG-STU-2026-5015`)* | `Student@TopGrade2026` | +1 713 382 5195 | STAAR prep | Claudette Fonndikum | `parent.claudette.fonndikum.5015@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 19 | **TG-STU-2026-5016** | **Samson Miller** | `samson.miller.5016@student.topgrade.edu`<br>*(or `TG-STU-2026-5016`)* | `Student@TopGrade2026` | +1 713 820 0880 | Afterschool (grade K) • Red Duke | Selena Miller | `selenademps@hotmail.com`<br>*(or `parent.selena.miller.5016@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 20 | **TG-STU-2026-5017** | **Logan Starks** | `logan.starks.5017@student.topgrade.edu`<br>*(or `TG-STU-2026-5017`)* | `Student@TopGrade2026` | +1 229 854 1224 | Math & Reading (Grade 6) • Sam Jamison | Quinisha Starks | `qunisha.starks1@gmail.com`<br>*(or `parent.quinisha.starks.5017@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 21 | **TG-STU-2026-5018** | **Joseph** | `joseph.5018@student.topgrade.edu`<br>*(or `TG-STU-2026-5018`)* | `Student@TopGrade2026` | +1 919 215 3437 | Summer camp & Math, writing, reading tutoring (Going to 1st grade-) | Janice Perkins | `deeutley@gmail.com`<br>*(or `parent.janice.perkins.5018@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 22 | **TG-STU-2026-5019** | **Sumay** | `sumay.5019@student.topgrade.edu`<br>*(or `TG-STU-2026-5019`)* | `Student@TopGrade2026` | +1 662 617 9073 | Writing skills (Grade 7) • Sablatura | Minny Bhatty | `minnybhatty@gmail.com`<br>*(or `parent.minny.bhatty.5019@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 23 | **TG-STU-2026-5020** | **Chirag** | `chirag.5020@student.topgrade.edu`<br>*(or `TG-STU-2026-5020`)* | `Student@TopGrade2026` | +1 304 419 5289 | AP Physics (grade 11) • Dawson | Prakash Motwani | `pmots@yahoo.com`<br>*(or `parent.prakash.motwani.5020@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 24 | **TG-STU-2026-5021** | **Chirag Motwani** | `chirag.motwani.5021@student.topgrade.edu`<br>*(or `TG-STU-2026-5021`)* | `Student@TopGrade2026` | +1 304 767 2676 | General Track | Self-Enrolled | `cmotwani10@gmail.com`<br>*(or `parent.chirag.motwani.5021@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 25 | **TG-STU-2026-5022** | **Kris** | `kris.5022@student.topgrade.edu`<br>*(or `TG-STU-2026-5022`)* | `Student@TopGrade2026` | +1 346 391 0006 | Geometry (grade9) | Rekha Nair | `nair.rekha11@gmail.com`<br>*(or `parent.rekha.nair.5022@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 26 | **TG-STU-2026-5023** | **Lydia Chaiban** | `lydia.5023@student.topgrade.edu`<br>*(or `TG-STU-2026-5023`)* | `Student@TopGrade2026` | +1 504 495 3594 | summer camp (Kindergarten • Red Duke) | Natalie Chaiban | `n_pilotte@yahoo.com`<br>*(or `parent.natalie.chaiban.5023@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 27 | **TG-STU-2026-5023-B** | **Elias Chaiban** | `elias.5023b@student.topgrade.edu`<br>*(or `TG-STU-2026-5023-B`)* | `Student@TopGrade2026` | +1 504 495 3594 | summer camp (Kindergarten • Red Duke) | Natalie Chaiban | `n_pilotte@yahoo.com`<br>*(or `parent.natalie.chaiban.5023@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 28 | **TG-STU-2026-5024** | **Saanvi Narula** | `saanvi.narula.5024@student.topgrade.edu`<br>*(or `TG-STU-2026-5024`)* | `Student@TopGrade2026` | +1 346 546 9546 | College Essay workshop (Grade 12) • Clear Creek HS | Uma Narula | `umanutritionist@gmail.com`<br>*(or `parent.uma.narula.5024@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 29 | **TG-STU-2026-5025** | **Christopher Habal** | `christopher.habal.5025@student.topgrade.edu`<br>*(or `TG-STU-2026-5025`)* | `Student@TopGrade2026` | +1 832 526 2483 | SAT prep, College Essay workshop (Grade 12) • HPVA-High School of Performing & Visual Arts | Barbara Habal | `barbarajaycacho@yahoo.com`<br>*(or `parent.barbara.habal.5025@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 30 | **TG-STU-2026-5026** | **Sky Zielinski** | `sky.zielinski.5026@student.topgrade.edu`<br>*(or `TG-STU-2026-5026`)* | `Student@TopGrade2026` | +1 832 274 9851 | Afterschool (grade K) • Massey Ranch | Lexii Zielinski | `alexisszielinski@gmail.com`<br>*(or `parent.lexii.zielinski.5026@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 31 | **TG-STU-2026-5027** | **Eric Penaloza** | `eric.5027@student.topgrade.edu`<br>*(or `TG-STU-2026-5027`)* | `Student@TopGrade2026` | +1 832 941 8419 | Afterschool (Kindergarten • Mary Marek) | marisol penaloza | `marisol.maldonado96@icloud.com`<br>*(or `parent.marisol.penaloza.5027@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 32 | **TG-STU-2026-5027-B** | **Robert Mora** | `robert.mora.5027b@student.topgrade.edu`<br>*(or `TG-STU-2026-5027-B`)* | `Student@TopGrade2026` | +1 832 941 8419 | Afterschool (Grade 6 • Nolan Ryan) | marisol penaloza | `marisol.maldonado96@icloud.com`<br>*(or `parent.marisol.penaloza.5027@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 33 | **TG-STU-2026-5028** | **Faith** | `faith.5028@student.topgrade.edu`<br>*(or `TG-STU-2026-5028`)* | `Student@TopGrade2026` | +1 346 313 5879 | Afterschool (grade 4) • Silverlake | Mili Chavez | `pabloymili2023@gmail.com`<br>*(or `parent.mili.chavez.5028@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 34 | **TG-STU-2026-5029** | **Amir Douhdouh** | `amir.douhdouh.5029@student.topgrade.edu`<br>*(or `TG-STU-2026-5029`)* | `Student@TopGrade2026` | +1 346 574 4701 | Afterschool (grade 8) • Berry Miller | Chantha | `chanthavorng@icloud.com`<br>*(or `parent.chantha.5029@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 35 | **TG-STU-2026-5030** | **Dhyana Desai** | `dhyana.5030@student.topgrade.edu`<br>*(or `TG-STU-2026-5030`)* | `Student@TopGrade2026` | +1 713 894 4018 | GT prep/ Math & Reading (Grade 2 • Glen York elem) | Dhara Desai | `dhara.6n@gmail.com`<br>*(or `parent.dhara.desai.5030@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 36 | **TG-STU-2026-5030-B** | **Aarshiv Desai** | `aarshiv.5030b@student.topgrade.edu`<br>*(or `TG-STU-2026-5030-B`)* | `Student@TopGrade2026` | +1 713 894 4018 | GT prep/ Math & Reading (Pre-K • Glen York elem) | Dhara Desai | `dhara.6n@gmail.com`<br>*(or `parent.dhara.desai.5030@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 37 | **TG-STU-2026-5031** | **Amisha** | `amisha.5031@student.topgrade.edu`<br>*(or `TG-STU-2026-5031`)* | `Student@TopGrade2026` | +1 713 855 9596 | PAP Spanish (grade 7) • Berry Miller | Rashmi Aggarwal | `rashmi.esq@gmail.com`<br>*(or `parent.rashmi.aggarwal.5031@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 38 | **TG-STU-2026-5032** | **Deven** | `deven.5032@student.topgrade.edu`<br>*(or `TG-STU-2026-5032`)* | `Student@TopGrade2026` | +1 832 314 3624 | AP Chem , SAT prep (grade 11) • Dawson | Linda Duggal | `duggaljd14@gmail.com`<br>*(or `parent.linda.duggal.5032@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 39 | **TG-STU-2026-5033** | **Sandeep Duggal** | `sandeep.duggal.5033@student.topgrade.edu`<br>*(or `TG-STU-2026-5033`)* | `Student@TopGrade2026` | +1 832 314 3626 | General Track | Self-Enrolled | `duggalmd@aol.com`<br>*(or `parent.sandeep.duggal.5033@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 40 | **TG-STU-2026-5034** | **Noshi Gupta** | `noshi.5034@student.topgrade.edu`<br>*(or `TG-STU-2026-5034`)* | `Student@TopGrade2026` | +1 312 497 0695 | General Track (Grade 11 • Top Grade Academy) | Anvita Gupta | `anvita512@gmail.com`<br>*(or `parent.anvita.gupta.5034@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 41 | **TG-STU-2026-5034-B** | **Kiaan Gupta** | `kiaan.5034b@student.topgrade.edu`<br>*(or `TG-STU-2026-5034-B`)* | `Student@TopGrade2026` | +1 312 497 0695 | General Track (Grade 9 • Top Grade Academy) | Anvita Gupta | `anvita512@gmail.com`<br>*(or `parent.anvita.gupta.5034@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 42 | **TG-STU-2026-5035** | **Raina** | `raina.5035@student.topgrade.edu`<br>*(or `TG-STU-2026-5035`)* | `Student@TopGrade2026` | +1 832 754 8223 | Hindi (grade 5) | Nitin Wadhwa | `nwadhwa78@gmail.com`<br>*(or `parent.nitin.wadhwa.5035@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 43 | **TG-STU-2026-5036** | **Brandon** | `brandon.5036@student.topgrade.edu`<br>*(or `TG-STU-2026-5036`)* | `Student@TopGrade2026` | +1 901 246 5376 | Math (grade 3...4) | Brandon Kimmons | `kimmonscare@gmail.com`<br>*(or `parent.brandon.kimmons.5036@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 44 | **TG-STU-2026-5037** | **Vinoli** | `vinoli.5037@student.topgrade.edu`<br>*(or `TG-STU-2026-5037`)* | `Student@TopGrade2026` | +1 573 308 5088 | Reading Writing (grade 5) | Kaushalya Amunugama | `kaushalya.amunugama@gmail.com`<br>*(or `parent.kaushalya.amunugama.5037@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 45 | **TG-STU-2026-5038** | **Sumay** | `sumay.5038@student.topgrade.edu`<br>*(or `TG-STU-2026-5038`)* | `Student@TopGrade2026` | +1 662 617 9073 | Writing (grade 6...7) | Minny Bhatty | `minnybhatty@gmail.com`<br>*(or `parent.minny.bhatty.5038@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 46 | **TG-STU-2026-5039** | **Anushka** | `anushka.5039@student.topgrade.edu`<br>*(or `TG-STU-2026-5039`)* | `Student@TopGrade2026` | +1 281 736 0945 | SAT prep (grade 12) • Dawson | Ayan Monpara | `monpara@gmail.com`<br>*(or `parent.ayan.monpara.5039@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 47 | **TG-STU-2026-5040** | **Kirtida Monpara** | `kirtida.monpara.5040@student.topgrade.edu`<br>*(or `TG-STU-2026-5040`)* | `Student@TopGrade2026` | +1 781 353 1272 | General Track | Self-Enrolled | `parent.kirtida.monpara.5040@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 48 | **TG-STU-2026-5041** | **Kaleb Smith** | `kaleb.smith.5041@student.topgrade.edu`<br>*(or `TG-STU-2026-5041`)* | `Student@TopGrade2026` | +1 973 760 4734 | SAT prep (grade 12) • Pearland HS | Blake Johnson | `mykix3@gmail.com`<br>*(or `parent.blake.johnson.5041@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 49 | **TG-STU-2026-5042** | **Kaleb Smith** | `kaleb.smith.5042@student.topgrade.edu`<br>*(or `TG-STU-2026-5042`)* | `Student@TopGrade2026` | +1 908 340 2976 | General Track | Self-Enrolled | `parent.kaleb.smith.5042@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 50 | **TG-STU-2026-5043** | **Serena** | `serena.5043@student.topgrade.edu`<br>*(or `TG-STU-2026-5043`)* | `Student@TopGrade2026` | +1 832 607 0195 | Alge 1 (grade 9) • Turner | Serena Ayala | `smayala79@yahoo.com`<br>*(or `parent.serena.ayala.5043@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 51 | **TG-STU-2026-5044** | **Serena III** | `serena.iii.5044@student.topgrade.edu`<br>*(or `TG-STU-2026-5044`)* | `Student@TopGrade2026` | +1 979 900 7400 | General Track | Self-Enrolled | `parent.serena.iii.5044@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 52 | **TG-STU-2026-5045** | **Hari Charan** | `hari.charan.5045@student.topgrade.edu`<br>*(or `TG-STU-2026-5045`)* | `Student@TopGrade2026` | +1 617 959 3713 | SAT prep (grade 11) • Dawson | Gayathri Sathiamoorthy | `gayathri.sathiamoorthy@gmail.com`<br>*(or `parent.gayathri.sathiamoorthy.5045@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 53 | **TG-STU-2026-5046** | **Reshmika** | `reshmika.5046@student.topgrade.edu`<br>*(or `TG-STU-2026-5046`)* | `Student@TopGrade2026` | +1 832 215 5432 | General Track (grade 9) • Dawson | Bindu Aghari | `parent.bindu.aghari.5046@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 54 | **TG-STU-2026-5047** | **Nikhil** | `nikhil.5047@student.topgrade.edu`<br>*(or `TG-STU-2026-5047`)* | `Student@TopGrade2026` | +1 281 851 5873 | SAT prep (grade 12) • Shadow Creek | Shiva Marthy | `shiva90@gmail.com`<br>*(or `parent.shiva.marthy.5047@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 55 | **TG-STU-2026-5048** | **Chaitanya Gundapaneni** | `chaitanya.gundapaneni.5048@student.topgrade.edu`<br>*(or `TG-STU-2026-5048`)* | `Student@TopGrade2026` | +1 281 614 9093 | General Track | Self-Enrolled | `chaitu900@gmail.com`<br>*(or `parent.chaitanya.gundapaneni.5048@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 56 | **TG-STU-2026-5049** | **Brooke** | `brooke.5049@student.topgrade.edu`<br>*(or `TG-STU-2026-5049`)* | `Student@TopGrade2026` | +1 713 299 8351 | Math (grade 8) • Berry Miller | Garrett Grant | `ggrantl@renewedstrength.biz`<br>*(or `parent.garrett.grant.5049@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 57 | **TG-STU-2026-5050** | **Vondeah Grant** | `vondeah.grant.5050@student.topgrade.edu`<br>*(or `TG-STU-2026-5050`)* | `Student@TopGrade2026` | +1 713 725 3665 | General Track | Self-Enrolled | `vondeahgrant@yahoo.com`<br>*(or `parent.vondeah.grant.5050@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 58 | **TG-STU-2026-5051** | **Ulaysha** | `ulaysha.5051@student.topgrade.edu`<br>*(or `TG-STU-2026-5051`)* | `Student@TopGrade2026` | +1 713 302 1264 | TSI prep (grade 12) • Shadow Creek | Elizabeth Osorio | `o.elizabeth@icloud.com`<br>*(or `parent.elizabeth.osorio.5051@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 59 | **TG-STU-2026-5052** | **Ulaysha Gibbs** | `ulaysha.gibbs.5052@student.topgrade.edu`<br>*(or `TG-STU-2026-5052`)* | `Student@TopGrade2026` | +1 713 820 0792 | General Track | Self-Enrolled | `ulayshagibbs@gmail.com`<br>*(or `parent.ulaysha.gibbs.5052@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 60 | **TG-STU-2026-5053** | **Madison Carter** | `madison.carter.5053@student.topgrade.edu`<br>*(or `TG-STU-2026-5053`)* | `Student@TopGrade2026` | +1 832 816 4463 | Afterschool (grade 6) • Sablatura | Amy Carter | `carterae2020@gmail.com`<br>*(or `parent.amy.carter.5053@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 61 | **TG-STU-2026-5054** | **Isabelle Buaku** | `isabelle.5054@student.topgrade.edu`<br>*(or `TG-STU-2026-5054`)* | `Student@TopGrade2026` | +1 734 709 1718 | Afterschool (Grade 3 • Silvercrest) | Florence Buaku | `flossied@gmail.com`<br>*(or `parent.florence.buaku.5054@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 62 | **TG-STU-2026-5054-B** | **Julia Buaku** | `julia.5054b@student.topgrade.edu`<br>*(or `TG-STU-2026-5054-B`)* | `Student@TopGrade2026` | +1 734 709 1718 | Afterschool (Grade 6 • Rogers) | Florence Buaku | `flossied@gmail.com`<br>*(or `parent.florence.buaku.5054@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 63 | **TG-STU-2026-5055** | **Abigail Rawls** | `abigail.rawls.5055@student.topgrade.edu`<br>*(or `TG-STU-2026-5055`)* | `Student@TopGrade2026` | +1 202 368 3012 | Afterschool (Grade 6) • Rogers | Judith Rawls | `jcothorn@gmail.com`<br>*(or `parent.judith.rawls.5055@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 64 | **TG-STU-2026-5056** | **Abi Bridger** | `abi.bridger.5056@student.topgrade.edu`<br>*(or `TG-STU-2026-5056`)* | `Student@TopGrade2026` | N/A | Afterschool (Grade 6) • Rogers | Yordana Bridger | `parent.yordana.bridger.5056@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 65 | **TG-STU-2026-5057** | **Viviana** | `viviana.5057@student.topgrade.edu`<br>*(or `TG-STU-2026-5057`)* | `Student@TopGrade2026` | +1 716 464 0517 | Afterschool (grade 2) • Silvercrest, | Geraldine Raja | `gerijosie@yahoo.com`<br>*(or `parent.geraldine.raja.5057@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 66 | **TG-STU-2026-5058** | **Nehemiah Pappan** | `nehemiah.5058@student.topgrade.edu`<br>*(or `TG-STU-2026-5058`)* | `Student@TopGrade2026` | +1 832 746 7799 | ESL (Grade 6 • Sablatura) | Soosan Pappan | `soosanmathai@yahoo.com`<br>*(or `parent.soosan.pappan.5058@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 67 | **TG-STU-2026-5058-B** | **Bezaleel Pappan** | `bezaleel.5058b@student.topgrade.edu`<br>*(or `TG-STU-2026-5058-B`)* | `Student@TopGrade2026` | +1 832 746 7799 | ESL (Grade 7 • PJHW) | Soosan Pappan | `soosanmathai@yahoo.com`<br>*(or `parent.soosan.pappan.5058@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 68 | **TG-STU-2026-5059** | **Kaliyah Morgan** | `kaliyah.5059@student.topgrade.edu`<br>*(or `TG-STU-2026-5059`)* | `Student@TopGrade2026` | +1 936 414 7009 | Reading & Math (Grade 4 • Wilder elem) | Lakeshia Morgan | `parent.lakeshia.morgan.5059@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 69 | **TG-STU-2026-5059-B** | **Kalena Morgan** | `kalena.5059b@student.topgrade.edu`<br>*(or `TG-STU-2026-5059-B`)* | `Student@TopGrade2026` | +1 936 414 7009 | Reading & Math (Grade 2 • Wilder elem) | Lakeshia Morgan | `parent.lakeshia.morgan.5059@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 70 | **TG-STU-2026-5060** | **Kayden Jones** | `kayden.jones.5060@student.topgrade.edu`<br>*(or `TG-STU-2026-5060`)* | `Student@TopGrade2026` | +1 346 319 9044 | Math (grade 4) • The Imani school | Chardae Evans | `chardaeevans1@gmail.com`<br>*(or `parent.chardae.evans.5060@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 71 | **TG-STU-2026-5061** | **AmudhanMadhan Kumar** | `amudhanmadhan.kumar.5061@student.topgrade.edu`<br>*(or `TG-STU-2026-5061`)* | `Student@TopGrade2026` | +1 281 809 6351 | College Essay writing (grade 12) • Dawson | Brindha Madhan | `brindha.biotek@gmail.com`<br>*(or `parent.brindha.madhan.5061@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 72 | **TG-STU-2026-5062** | **Sophie Smith** | `sophie.5062@student.topgrade.edu`<br>*(or `TG-STU-2026-5062`)* | `Student@TopGrade2026` | +1 832 275 5298 | Afterschool (Grade 9 • Turner) | Annie Smith | `annieb@cgsfs.com`<br>*(or `parent.annie.smith.5062@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 73 | **TG-STU-2026-5062-B** | **Dahlia Smith** | `dahlia.5062b@student.topgrade.edu`<br>*(or `TG-STU-2026-5062-B`)* | `Student@TopGrade2026` | +1 832 275 5298 | Afterschool (Grade 5 • Rogers) | Annie Smith | `annieb@cgsfs.com`<br>*(or `parent.annie.smith.5062@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 74 | **TG-STU-2026-5063** | **Chardaet Galvan** | `chardaet.galvan.5063@student.topgrade.edu`<br>*(or `TG-STU-2026-5063`)* | `Student@TopGrade2026` | +1 713 858 5771 | General Track | Self-Enrolled | `parent.chardaet.galvan.5063@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 75 | **TG-STU-2026-5064** | **Evan Li** | `evan.li.5064@student.topgrade.edu`<br>*(or `TG-STU-2026-5064`)* | `Student@TopGrade2026` | +1 832 288 0435 | PAP Chemistry, PAP Alge 2 (grade 10) • Dawson | Ke Li | `ke.li@outlook.com`<br>*(or `parent.ke.li.5064@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 76 | **TG-STU-2026-5065** | **Micah** | `micah.5065@student.topgrade.edu`<br>*(or `TG-STU-2026-5065`)* | `Student@TopGrade2026` | +1 832 712 3339 | Reading, Handwriting (grade 7) • PJHS | Wes Murdoch | `wesdmurdock@hotmail.com`<br>*(or `parent.wes.murdoch.5065@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 77 | **TG-STU-2026-5066** | **Ava** | `ava.5066@student.topgrade.edu`<br>*(or `TG-STU-2026-5066`)* | `Student@TopGrade2026` | +1 832 879 7941 | PAP Geometry (grade 10) • Pearland HS | Rosie Lopez | `rosieflopez@yahoo.com`<br>*(or `parent.rosie.lopez.5066@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 78 | **TG-STU-2026-5067** | **Charlotte** | `charlotte.5067@student.topgrade.edu`<br>*(or `TG-STU-2026-5067`)* | `Student@TopGrade2026` | +1 713 823 6790 | Math (grade 12) • Manvel HS | Frank Fernandez | `ftfern24@yahoo.com`<br>*(or `parent.frank.fernandez.5067@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 79 | **TG-STU-2026-5068** | **Charlie** | `charlie.5068@student.topgrade.edu`<br>*(or `TG-STU-2026-5068`)* | `Student@TopGrade2026` | +1 401 743 9608 | Reading (grade 4) • Massey ranch | Liz Rodwell | `elizabethannrodwell@gmail.com`<br>*(or `parent.liz.rodwell.5068@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
-| 80 | **TG-STU-2026-9717** | **harshith pabisetty** | `std-1788241892654@topgrade.edu`<br>*(or `TG-STU-2026-9717`)* | `Student@TopGrade2026` | +1 5818585656 | Python Beginners & Logic | sathish | `parent.sathish.9717@parents.topgrade.edu` | `Parent@TopGrade2026` |
-| 81 | **TG-STU-2026-3044** | **Pari Upadhyaya** | `riaupadhyaya3@gmail.com`<br>*(or `TG-STU-2026-3044`)* | `Student@TopGrade2026` | +1 346 822 8020 | English & Writing | Jignesh Upadhyaya | `tglbiz101@gmail.com`<br>*(or `parent.jignesh.upadhyaya.3044@parents.topgrade.edu`)* | `Parent@TopGrade2026` |
+| Role | Username / Login Identifier | Password | Access Rights |
+| :--- | :--- | :--- | :--- |
+| **Parent** | Personal Email from PNG *(e.g. `tanyeafowls@yahoo.com`)* **OR** Portal Email *(e.g. `parent.tanyea.fowls.5001@parents.topgrade.edu`)* | `Parent@TopGrade2026` | View linked children, child timetable, child course curriculum, fees, attendance |
+| **Student** | Student Code *(e.g. `TG-STU-2026-5001`)* **OR** Student Email *(e.g. `jacob.5001@student.topgrade.edu`)* | `Student@TopGrade2026` | View self dossier, enrolled course syllabus, weekly timetable, attendance |
 
 ---
 
-## 4. Multi-Child Families Reference Table
+## 3. Master Parent & Student Credential Directory (73 Records)
 
-| Parent Name | Contact Phone | Parent Login Email(s) | Child 1 (Code, Name, Grade) | Child 2 (Code, Name, Grade) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Annie Smith** | +1 832 275 5298 | `annieb@cgsfs.com` | `TG-STU-2026-5062` Sophie Smith (Grade 9) | `TG-STU-2026-5062-B` Dahlia Smith (Grade 5) |
-| **Lakeshia Morgan** | +1 936 414 7009 | `parent.lakeshia.morgan.5059@parents.topgrade.edu` | `TG-STU-2026-5059` Kaliyah Morgan (Grade 4) | `TG-STU-2026-5059-B` Kalena Morgan (Grade 2) |
-| **Soosan Pappan** | +1 832 746 7799 | `soosanmathai@yahoo.com` | `TG-STU-2026-5058` Nehemiah Pappan (Grade 6) | `TG-STU-2026-5058-B` Bezaleel Pappan (Grade 7) |
-| **Florence Buaku** | +1 734 709 1718 | `flossied@gmail.com` | `TG-STU-2026-5054` Isabelle Buaku (Grade 3) | `TG-STU-2026-5054-B` Julia Buaku (Grade 6) |
-| **Anvita Gupta** | +1 312 497 0695 | `anvita512@gmail.com` | `TG-STU-2026-5034` Noshi Gupta (Grade 11) | `TG-STU-2026-5034-B` Kiaan Gupta (Grade 9) |
-| **Dhara Desai** | +1 713 894 4018 | `dhara.6n@gmail.com` | `TG-STU-2026-5030` Dhyana Desai (Grade 2) | `TG-STU-2026-5030-B` Aarshiv Desai (Pre-K) |
-| **marisol penaloza** | +1 832 941 8419 | `marisol.maldonado96@icloud.com` | `TG-STU-2026-5027` Eric Penaloza (Kindergarten) | `TG-STU-2026-5027-B` Robert Mora (Grade 6) |
-| **Lani Mercado** | +1 713 319 8985 | `lani.garrido@gmail.com` | `TG-STU-2026-5007` Kiron Mercado (Grade 4) | `TG-STU-2026-5007-B` Cara Mercado (Grade 2) |
-| **Natalie Chaiban** | +1 504 495 3594 | `n_pilotte@yahoo.com` | `TG-STU-2026-5023` Lydia Chaiban (Kindergarten) | `TG-STU-2026-5023-B` Elias Chaiban (Kindergarten) |
+| # | Student ID | Student Name | Grade & School | Selected Course | Student Login Email | Parent Name & Phone | Parent Login Email (PNG / Personal) | Parent Portal Email |
+| :- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | `TG-STU-2026-3044` | **Pari Upadhyaya** | Grade 12 • Narayana Olympiad School | | `English` | `riaupadhyaya3@gmail.com` | Jignesh Upadhyaya (+1 3468228020) | `tglbiz101@gmail.com` | `—` |
+| **2** | `TG-STU-2026-3632` | **Siva Reddy** | Grade 12 • Bhashyam High School | `AP Calculus` | `clashofclansreddy@gmail.com` | Venakat (+1 7780648562) | `sivareddy683970@gmail.com` | `parent.venakat.3632@parents.topgrade.edu` |
+| **3** | `TG-STU-2026-4231` | **rajesh ganta** | Grade 12 • TopGrade Partner School | `General Academic Track` | `rajeshganta@gmail.com` | srinu (+1 1234567894) | `rajeshganta@gmail.com` | `parent.srinu.4231@parents.topgrade.edu` |
+| **4** | `TG-STU-2026-5001` | **Jacob** | Grade 5 • Sablatura | `Reading Comp` | `jacob.5001@student.topgrade.edu` | Tanyea Fowls (+1 832 209 9729) | `tanyeafowls@yahoo.com` | `parent.tanyea.fowls.5001@parents.topgrade.edu` |
+| **5** | `TG-STU-2026-5002` | **Kamauri Hunter** | Kindergarten • IL Texas | `Reading` | `kamauri.hunter.5002@student.topgrade.edu` | Angel Lewis (+1 832 322 2239) | `missyou1970@yahoo.com` | `parent.angel.lewis.5002@parents.topgrade.edu` |
+| **6** | `TG-STU-2026-5003` | **Tierra Perry** | Grade 10 • Top Grade Academy | `General Track` | `tierra.perry.5003@student.topgrade.edu` | Tierra Perry Parent (+1 832 888 8512) | `—` | `parent.tierra.perry.5003@parents.topgrade.edu` |
+| **7** | `TG-STU-2026-5004` | **Camila** | Grade 3 • Lahon elem, | `Reading` | `camila.5004@student.topgrade.edu` | DULCE Eduardo Garcia (+1 832 276 2098) | `gdulce955@gmail.com` | `parent.dulce.eduardo.garcia.5004@parents.topgrade.edu` |
+| **8** | `TG-STU-2026-5005` | **Giselle** | Grade 4 • Rogers | `Afterschool` | `giselle.5005@student.topgrade.edu` | Elizabeth Guillory (+1 832 589 3676) | `guilloryea@gmail.com` | `parent.elizabeth.guillory.5005@parents.topgrade.edu` |
+| **9** | `TG-STU-2026-5006` | **Leandro** | Grade 4 • Silverlake | `Afterschool` | `leandro.5006@student.topgrade.edu` | Esperanza garcia (+1 832 431 1633) | `esperanzagarciaovalle@gmail.com` | `parent.esperanza.garcia.5006@parents.topgrade.edu` |
+| **10** | `TG-STU-2026-5007` | **Kiron Mercado** | Grade 4 • Silverlake | `Afterschool` | `kiron.5007@student.topgrade.edu` | Lani Mercado (+1 713 319 8985) | `lani.garrido@gmail.com` | `parent.lani.mercado.5007@parents.topgrade.edu` |
+| **11** | `TG-STU-2026-5007-B` | **Cara Mercado** | Grade 2 • Silverlake | `Afterschool` | `cara.5007b@student.topgrade.edu` | Lani Mercado (+1 713 319 8985) | `lani.garrido@gmail.com` | `parent.lani.mercado.5007@parents.topgrade.edu` |
+| **12** | `TG-STU-2026-5008` | **Evelyn** | Kindergarten • Silvercrest | `Afterschool` | `evelyn.5008@student.topgrade.edu` | Anna Jan (+1 626 808 2351) | `annasjan@gmail.com` | `parent.anna.jan.5008@parents.topgrade.edu` |
+| **13** | `TG-STU-2026-5009` | **CJ** | Grade 3 • Top Grade Academy | `Reading` | `cj.5009@student.topgrade.edu` | Chad Williams (+1 904 226 8065) | `chad8404@gmail.com` | `parent.chad.williams.5009@parents.topgrade.edu` |
+| **14** | `TG-STU-2026-5010` | **Ethan Kuzniar** | Grade 4 • Top Grade Academy | `STAAR` | `ethan.kuzniar.5010@student.topgrade.edu` | Yoselin Kuzniar (+1 832 344 7553) | `conner.skuzniar@gmail.com` | `parent.yoselin.kuzniar.5010@parents.topgrade.edu` |
+| **15** | `TG-STU-2026-5012` | **Minh** | Kindergarten • Silverlake elem | `Afterschool` | `minh.5012@student.topgrade.edu` | Loan Nguyen (+1 281 617 9583) | `nloan969@gmail.com` | `parent.loan.nguyen.5012@parents.topgrade.edu` |
+| **16** | `TG-STU-2026-5013` | **Tu Hyunh** | Grade 10 • Top Grade Academy | `General Track` | `tu.hyunh.5013@student.topgrade.edu` | Tu Hyunh Parent (+1 714 261 6170) | `tuhuynh0046@gmail.com` | `parent.tu.hyunh.5013@parents.topgrade.edu` |
+| **17** | `TG-STU-2026-5014` | **Peyton** | Grade 5 • Rogers | `Afterschool` | `peyton.5014@student.topgrade.edu` | Alexis Merritt (+1 334 372 5625) | `megul41@gmail.com` | `parent.alexis.merritt.5014@parents.topgrade.edu` |
+| **18** | `TG-STU-2026-5015` | **Uriel** | Grade 10 • Top Grade Academy | `STAAR prep` | `uriel.5015@student.topgrade.edu` | Claudette Fonndikum (+1 713 382 5195) | `—` | `parent.claudette.fonndikum.5015@parents.topgrade.edu` |
+| **19** | `TG-STU-2026-5016` | **Samson Miller** | Kindergarten • Red Duke | `Afterschool` | `samson.miller.5016@student.topgrade.edu` | Selena Miller (+1 713 820 0880) | `selenademps@hotmail.com` | `parent.selena.miller.5016@parents.topgrade.edu` |
+| **20** | `TG-STU-2026-5017` | **Logan Starks** | Grade 6 • Sam Jamison | `Math & Reading` | `logan.starks.5017@student.topgrade.edu` | Quinisha Starks (+1 229 854 1224) | `qunisha.starks1@gmail.com` | `parent.quinisha.starks.5017@parents.topgrade.edu` |
+| **21** | `TG-STU-2026-5018` | **Joseph** | Going to 1st grade- • Top Grade Academy | `Summer camp & Math, writing, reading tutoring` | `joseph.5018@student.topgrade.edu` | Janice Perkins (+1 919 215 3437) | `deeutley@gmail.com` | `parent.janice.perkins.5018@parents.topgrade.edu` |
+| **22** | `TG-STU-2026-5019` | **Sumay** | Grade 7 • Sablatura | `Writing skills` | `sumay.5019@student.topgrade.edu` | Minny Bhatty (+1 662 617 9073) | `minnybhatty@gmail.com` | `parent.minny.bhatty.5038@parents.topgrade.edu` |
+| **23** | `TG-STU-2026-5020` | **Chirag** | Grade 11 • Dawson | `AP Physics` | `chirag.5020@student.topgrade.edu` | Prakash Motwani (+1 304 419 5289) | `cmotwani10@gmail.com` | `parent.prakash.motwani.5020@parents.topgrade.edu` |
+| **24** | `TG-STU-2026-5022` | **Kris** | Grade 9 • Top Grade Academy | `Geometry` | `kris.5022@student.topgrade.edu` | Rekha Nair (+1 346 391 0006) | `nair.rekha11@gmail.com` | `parent.rekha.nair.5022@parents.topgrade.edu` |
+| **25** | `TG-STU-2026-5023` | **Lydia Chaiban** | Kindergarten • Red Duke | `summer camp` | `lydia.5023@student.topgrade.edu` | Natalie Chaiban (+1 504 495 3594) | `n_pilotte@yahoo.com` | `parent.natalie.chaiban.5023@parents.topgrade.edu` |
+| **26** | `TG-STU-2026-5023-B` | **Elias Chaiban** | Kindergarten • Red Duke | `summer camp` | `elias.5023b@student.topgrade.edu` | Natalie Chaiban (+1 504 495 3594) | `n_pilotte@yahoo.com` | `parent.natalie.chaiban.5023@parents.topgrade.edu` |
+| **27** | `TG-STU-2026-5024` | **Saanvi Narula** | Grade 12 • Clear Creek HS | `College Essay workshop` | `saanvi.narula.5024@student.topgrade.edu` | Uma Narula (+1 346 546 9546) | `umanutritionist@gmail.com` | `parent.uma.narula.5024@parents.topgrade.edu` |
+| **28** | `TG-STU-2026-5025` | **Christopher Habal** | Grade 12 • HPVA-High School of Performing & Visual Arts | `SAT prep, College Essay workshop` | `christopher.habal.5025@student.topgrade.edu` | Barbara Habal (+1 832 526 2483) | `barbarajaycacho@yahoo.com` | `parent.barbara.habal.5025@parents.topgrade.edu` |
+| **29** | `TG-STU-2026-5026` | **Sky Zielinski** | Kindergarten • Massey Ranch | `Afterschool` | `sky.zielinski.5026@student.topgrade.edu` | Lexii Zielinski (+1 832 274 9851) | `alexisszielinski@gmail.com` | `parent.lexii.zielinski.5026@parents.topgrade.edu` |
+| **30** | `TG-STU-2026-5027` | **Eric Penaloza** | Kindergarten • Mary Marek | `Afterschool` | `eric.5027@student.topgrade.edu` | marisol penaloza (+1 832 941 8419) | `marisol.maldonado96@icloud.com` | `parent.marisol.penaloza.5027@parents.topgrade.edu` |
+| **31** | `TG-STU-2026-5027-B` | **Robert Mora** | Grade 6 • Nolan Ryan | `Afterschool` | `robert.mora.5027b@student.topgrade.edu` | marisol penaloza (+1 832 941 8419) | `marisol.maldonado96@icloud.com` | `parent.marisol.penaloza.5027@parents.topgrade.edu` |
+| **32** | `TG-STU-2026-5028` | **Faith** | Grade 4 • Silverlake | `Afterschool` | `faith.5028@student.topgrade.edu` | Mili Chavez (+1 346 313 5879) | `pabloymili2023@gmail.com` | `parent.mili.chavez.5028@parents.topgrade.edu` |
+| **33** | `TG-STU-2026-5029` | **Amir Douhdouh** | Grade 8 • Berry Miller | `Afterschool` | `amir.douhdouh.5029@student.topgrade.edu` | Chantha (+1 346 574 4701) | `chanthavorng@icloud.com` | `parent.chantha.5029@parents.topgrade.edu` |
+| **34** | `TG-STU-2026-5030` | **Dhyana Desai** | Grade 2 • Glen York elem | `GT prep/ Math & Reading` | `dhyana.5030@student.topgrade.edu` | Dhara Desai (+1 713 894 4018) | `dhara.6n@gmail.com` | `parent.dhara.desai.5030@parents.topgrade.edu` |
+| **35** | `TG-STU-2026-5030-B` | **Aarshiv Desai** | Pre-K • Glen York elem | `GT prep/ Math & Reading` | `aarshiv.5030b@student.topgrade.edu` | Dhara Desai (+1 713 894 4018) | `dhara.6n@gmail.com` | `parent.dhara.desai.5030@parents.topgrade.edu` |
+| **36** | `TG-STU-2026-5031` | **Amisha** | Grade 7 • Berry Miller | `PAP Spanish` | `amisha.5031@student.topgrade.edu` | Rashmi Aggarwal (+1 713 855 9596) | `rashmi.esq@gmail.com` | `parent.rashmi.aggarwal.5031@parents.topgrade.edu` |
+| **37** | `TG-STU-2026-5032` | **Deven** | Grade 11 • Dawson | `AP Chem , SAT prep` | `deven.5032@student.topgrade.edu` | Linda Duggal (+1 832 314 3624) | `duggalmd@aol.com` | `parent.linda.duggal.5032@parents.topgrade.edu` |
+| **38** | `TG-STU-2026-5034` | **Noshi Gupta** | Grade 11 • Top Grade Academy | `General Track` | `noshi.5034@student.topgrade.edu` | Anvita Gupta (+1 312 497 0695) | `anvita512@gmail.com` | `parent.anvita.gupta.5034@parents.topgrade.edu` |
+| **39** | `TG-STU-2026-5034-B` | **Kiaan Gupta** | Grade 9 • Top Grade Academy | `General Track` | `kiaan.5034b@student.topgrade.edu` | Anvita Gupta (+1 312 497 0695) | `anvita512@gmail.com` | `parent.anvita.gupta.5034@parents.topgrade.edu` |
+| **40** | `TG-STU-2026-5035` | **Raina** | Grade 5 • Top Grade Academy | `Hindi` | `raina.5035@student.topgrade.edu` | Nitin Wadhwa (+1 832 754 8223) | `nwadhwa78@gmail.com` | `parent.nitin.wadhwa.5035@parents.topgrade.edu` |
+| **41** | `TG-STU-2026-5036` | **Brandon** | Grade 3 • Top Grade Academy | `Math` | `brandon.5036@student.topgrade.edu` | Brandon Kimmons (+1 901 246 5376) | `kimmonscare@gmail.com` | `parent.brandon.kimmons.5036@parents.topgrade.edu` |
+| **42** | `TG-STU-2026-5037` | **Vinoli** | Grade 5 • Top Grade Academy | `Reading Writing` | `vinoli.5037@student.topgrade.edu` | Kaushalya Amunugama (+1 573 308 5088) | `kaushalya.amunugama@gmail.com` | `parent.kaushalya.amunugama.5037@parents.topgrade.edu` |
+| **43** | `TG-STU-2026-5038` | **Sumay** | Grade 6 • Top Grade Academy | `Writing` | `sumay.5038@student.topgrade.edu` | Minny Bhatty (+1 662 617 9073) | `minnybhatty@gmail.com` | `parent.minny.bhatty.5038@parents.topgrade.edu` |
+| **44** | `TG-STU-2026-5039` | **Anushka** | Grade 12 • Dawson | `SAT prep` | `anushka.5039@student.topgrade.edu` | Ayan Monpara (+1 281 736 0945) | `monpara@gmail.com` | `parent.ayan.monpara.5039@parents.topgrade.edu` |
+| **45** | `TG-STU-2026-5041` | **Kaleb Smith** | Grade 12 • Pearland HS | `SAT prep` | `kaleb.smith.5041@student.topgrade.edu` | Blake Johnson (+1 973 760 4734) | `mykix3@gmail.com` | `parent.blake.johnson.5041@parents.topgrade.edu` |
+| **46** | `TG-STU-2026-5043` | **Serena** | Grade 9 • Turner | `Alge 1` | `serena.5043@student.topgrade.edu` | Serena Ayala (+1 832 607 0195) | `smayala79@yahoo.com` | `parent.serena.ayala.5043@parents.topgrade.edu` |
+| **47** | `TG-STU-2026-5045` | **Hari Charan** | Grade 11 • Dawson | `SAT prep` | `hari.charan.5045@student.topgrade.edu` | Gayathri Sathiamoorthy (+1 617 959 3713) | `gayathri.sathiamoorthy@gmail.com` | `parent.gayathri.sathiamoorthy.5045@parents.topgrade.edu` |
+| **48** | `TG-STU-2026-5046` | **Reshmika** | Grade 9 • Dawson | `General Track` | `reshmika.5046@student.topgrade.edu` | Bindu Aghari (+1 832 215 5432) | `—` | `parent.bindu.aghari.5046@parents.topgrade.edu` |
+| **49** | `TG-STU-2026-5047` | **Nikhil** | Grade 12 • Shadow Creek | `SAT prep` | `nikhil.5047@student.topgrade.edu` | Shiva Marthy (+1 281 851 5873) | `shiva90@gmail.com` | `parent.shiva.marthy.5047@parents.topgrade.edu` |
+| **50** | `TG-STU-2026-5048` | **Chaitanya Gundapaneni** | Grade 10 • Top Grade Academy | `General Track` | `chaitanya.gundapaneni.5048@student.topgrade.edu` | Chaitanya Gundapaneni Parent (+1 281 614 9093) | `chaitu900@gmail.com` | `parent.chaitanya.gundapaneni.5048@parents.topgrade.edu` |
+| **51** | `TG-STU-2026-5049` | **Brooke** | Grade 8 • Berry Miller | `Math` | `brooke.5049@student.topgrade.edu` | Garrett Grant (+1 713 299 8351) | `vondeahgrant@yahoo.com` | `parent.garrett.grant.5049@parents.topgrade.edu` |
+| **52** | `TG-STU-2026-5051` | **Ulaysha** | Grade 12 • Shadow Creek | `TSI prep` | `ulaysha.5051@student.topgrade.edu` | Elizabeth Osorio (+1 713 302 1264) | `ulayshagibbs@gmail.com` | `parent.elizabeth.osorio.5051@parents.topgrade.edu` |
+| **53** | `TG-STU-2026-5053` | **Madison Carter** | Grade 6 • Sablatura | `Afterschool` | `madison.carter.5053@student.topgrade.edu` | Amy Carter (+1 832 816 4463) | `carterae2020@gmail.com` | `parent.amy.carter.5053@parents.topgrade.edu` |
+| **54** | `TG-STU-2026-5054` | **Isabelle Buaku** | Grade 3 • Silvercrest | `Afterschool` | `isabelle.5054@student.topgrade.edu` | Florence Buaku (+1 734 709 1718) | `flossied@gmail.com` | `parent.florence.buaku.5054@parents.topgrade.edu` |
+| **55** | `TG-STU-2026-5054-B` | **Julia Buaku** | Grade 6 • Rogers | `Afterschool` | `julia.5054b@student.topgrade.edu` | Florence Buaku (+1 734 709 1718) | `flossied@gmail.com` | `parent.florence.buaku.5054@parents.topgrade.edu` |
+| **56** | `TG-STU-2026-5055` | **Abigail Rawls** | Grade 6 • Rogers | `Afterschool` | `abigail.rawls.5055@student.topgrade.edu` | Judith Rawls (+1 202 368 3012) | `jcothorn@gmail.com` | `parent.judith.rawls.5055@parents.topgrade.edu` |
+| **57** | `TG-STU-2026-5056` | **Abi Bridger** | Grade 6 • Rogers | `Afterschool` | `abi.bridger.5056@student.topgrade.edu` | Yordana Bridger (+1 ) | `—` | `parent.yordana.bridger.5056@parents.topgrade.edu` |
+| **58** | `TG-STU-2026-5057` | **Viviana** | Grade 2 • Silvercrest, | `Afterschool` | `viviana.5057@student.topgrade.edu` | Geraldine Raja (+1 716 464 0517) | `gerijosie@yahoo.com` | `parent.geraldine.raja.5057@parents.topgrade.edu` |
+| **59** | `TG-STU-2026-5058` | **Nehemiah Pappan** | Grade 6 • Sablatura | `ESL` | `nehemiah.5058@student.topgrade.edu` | Soosan Pappan (+1 832 746 7799) | `soosanmathai@yahoo.com` | `parent.soosan.pappan.5058@parents.topgrade.edu` |
+| **60** | `TG-STU-2026-5058-B` | **Bezaleel Pappan** | Grade 7 • PJHW | `ESL` | `bezaleel.5058b@student.topgrade.edu` | Soosan Pappan (+1 832 746 7799) | `soosanmathai@yahoo.com` | `parent.soosan.pappan.5058@parents.topgrade.edu` |
+| **61** | `TG-STU-2026-5059` | **Kaliyah Morgan** | Grade 4 • Wilder elem | `Reading & Math` | `kaliyah.5059@student.topgrade.edu` | Lakeshia Morgan (+1 936 414 7009) | `—` | `parent.lakeshia.morgan.5059@parents.topgrade.edu` |
+| **62** | `TG-STU-2026-5059-B` | **Kalena Morgan** | Grade 2 • Wilder elem | `Reading & Math` | `kalena.5059b@student.topgrade.edu` | Lakeshia Morgan (+1 936 414 7009) | `—` | `parent.lakeshia.morgan.5059@parents.topgrade.edu` |
+| **63** | `TG-STU-2026-5060` | **Kayden Jones** | Grade 4 • The Imani school | `Math` | `kayden.jones.5060@student.topgrade.edu` | Chardae Evans (+1 346 319 9044) | `chardaeevans1@gmail.com` | `parent.chardae.evans.5060@parents.topgrade.edu` |
+| **64** | `TG-STU-2026-5061` | **AmudhanMadhan Kumar** | Grade 12 • Dawson | `College Essay writing` | `amudhanmadhan.kumar.5061@student.topgrade.edu` | Brindha Madhan (+1 281 809 6351) | `brindha.biotek@gmail.com` | `parent.brindha.madhan.5061@parents.topgrade.edu` |
+| **65** | `TG-STU-2026-5062` | **Sophie Smith** | Grade 9 • Turner | `Afterschool` | `sophie.5062@student.topgrade.edu` | Annie Smith (+1 832 275 5298) | `annieb@cgsfs.com` | `parent.annie.smith.5062@parents.topgrade.edu` |
+| **66** | `TG-STU-2026-5062-B` | **Dahlia Smith** | Grade 5 • Rogers | `Afterschool` | `dahlia.5062b@student.topgrade.edu` | Annie Smith (+1 832 275 5298) | `annieb@cgsfs.com` | `parent.annie.smith.5062@parents.topgrade.edu` |
+| **67** | `TG-STU-2026-5063` | **Chardaet Galvan** | Grade 10 • Top Grade Academy | `General Track` | `chardaet.galvan.5063@student.topgrade.edu` | Chardaet Galvan Parent (+1 713 858 5771) | `—` | `parent.chardaet.galvan.5063@parents.topgrade.edu` |
+| **68** | `TG-STU-2026-5064` | **Evan Li** | Grade 10 • Dawson | `PAP Chemistry, PAP Alge 2` | `evan.li.5064@student.topgrade.edu` | Ke Li (+1 832 288 0435) | `ke.li@outlook.com` | `parent.ke.li.5064@parents.topgrade.edu` |
+| **69** | `TG-STU-2026-5065` | **Micah** | Grade 7 • PJHS | `Reading, Handwriting` | `micah.5065@student.topgrade.edu` | Wes Murdoch (+1 832 712 3339) | `wesdmurdock@hotmail.com` | `parent.wes.murdoch.5065@parents.topgrade.edu` |
+| **70** | `TG-STU-2026-5066` | **Ava** | Grade 10 • Pearland HS | `PAP Geometry` | `ava.5066@student.topgrade.edu` | Rosie Lopez (+1 832 879 7941) | `rosieflopez@yahoo.com` | `parent.rosie.lopez.5066@parents.topgrade.edu` |
+| **71** | `TG-STU-2026-5067` | **Charlotte** | Grade 12 • Manvel HS | `Math` | `charlotte.5067@student.topgrade.edu` | Frank Fernandez (+1 713 823 6790) | `ftfern24@yahoo.com` | `parent.frank.fernandez.5067@parents.topgrade.edu` |
+| **72** | `TG-STU-2026-5068` | **Charlie** | Grade 4 • Massey ranch | `Reading` | `charlie.5068@student.topgrade.edu` | Liz Rodwell (+1 401 743 9608) | `elizabethannrodwell@gmail.com` | `parent.liz.rodwell.5068@parents.topgrade.edu` |
+| **73** | `TG-STU-2026-9717` | **harshith pabisetty** | Grade 12 • TopGrade Partner School | `Python Beginners & Logic` | `std-1788241892654@topgrade.edu` | sathish (+1 5818585656) | `std-1788241892654@topgrade.edu` | `parent.sathish.9717@parents.topgrade.edu` |
 
 ---
 
-## 5. Portal Navigation Notes
+## 4. Secondary Parent / Dual-Guardian Accounts (Linked Families)
 
-- **Parent Dashboard**: When a parent logs in, all registered children appear in the **Select Child Account** tab at the top. Switching tabs loads the selected child's enrolled courses, attendance rate, faculty instructor, and tuition invoices.
-- **Student Portal**: Students log in directly with their Student Code (e.g. `TG-STU-2026-5062` or `TG-STU-2026-5062-B`) and access their own personalized Student Dashboard.
+The following secondary parents and guardians share phone numbers or family ties with enrolled students and have dedicated login credentials to view their child's dossier and course tracks:
+
+| # | Guardian Name | Login Email | Password | Phone | Linked Child | Child Student ID | Enrolled Course |
+| :- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **1** | **Sandeep Duggal** | `duggalmd@aol.com` | `Parent@TopGrade2026` | +1 832 314 3626 | **Deven** | `TG-STU-2026-5032` | `AP Chem , SAT prep` |
+| **2** | **Conner Kuzniar** | `conner.skuzniar@gmail.com` | `Parent@TopGrade2026` | +1 713 208 0947 | **Ethan Kuzniar** | `TG-STU-2026-5010` | `STAAR` |
+| **3** | **Chirag Motwani** | `cmotwani10@gmail.com` | `Parent@TopGrade2026` | +1 304 767 2676 | **Chirag** | `TG-STU-2026-5020` | `AP Physics` |
+| **4** | **Vondeah Grant** | `vondeahgrant@yahoo.com` | `Parent@TopGrade2026` | +1 713 725 3665 | **Brooke** | `TG-STU-2026-5049` | `Math` |
+| **5** | **Ulaysha Gibbs** | `ulayshagibbs@gmail.com` | `Parent@TopGrade2026` | +1 713 820 0792 | **Ulaysha** | `TG-STU-2026-5051` | `TSI prep` |
+| **6** | **Chaitanya Gundapaneni** | `chaitu900@gmail.com` | `Parent@TopGrade2026` | +1 281 614 9093 | **Chaitanya Gundapaneni** | `TG-STU-2026-5048` | `SAT prep` |
+| **7** | **Kirtida Monpara** | `parent.kirtida.monpara.5040@parents.topgrade.edu` | `Parent@TopGrade2026` | +1 781 353 1272 | **Anushka** | `TG-STU-2026-5039` | `SAT prep` |
+| **8** | **Kaleb Smith (Parent Contact)** | `parent.kaleb.smith.5042@parents.topgrade.edu` | `Parent@TopGrade2026` | +1 908 340 2976 | **Kaleb Smith** | `TG-STU-2026-5041` | `SAT prep` |
+| **9** | **Serena III** | `parent.serena.iii.5044@parents.topgrade.edu` | `Parent@TopGrade2026` | +1 979 900 7400 | **Serena** | `TG-STU-2026-5043` | `Algebra 1` |
+
+---
+
+## 5. Course Tracks & Normalized Catalog Mapping
+
+Below is the cross-reference between PNG course names and TopGrade CRM catalog courses:
+
+| PNG Course Name | Enrolled TopGrade Course Stream | Catalog Course Code | Category |
+| :--- | :--- | :--- | :--- |
+| **Reading Comp** | Reading Comprehension | `CRS-REA-101` | Language Arts & Reading |
+| **Reading** | Reading Foundations / Comprehension | `CRS-REA-101` | Language Arts & Reading |
+| **Afterschool** | After School Program | `CRS-AFT-101` | General Enrichment |
+| **STAAR / STAAR prep** | STAAR Prep (Math & Reading) | `CRS-STR-101` | Test Preparation |
+| **Math & Reading** | Math & Reading Foundations | `CRS-MR-101` | Academic Core |
+| **Summer camp & Math, writing, reading tutoring** | Summer Camp & Academic Tutoring | `CRS-SMP-101` | Summer & Camps |
+| **Writing skills / Writing** | Writing Skills & Handwriting | `CRS-WRT-101` | Language Arts & Reading |
+| **AP Physics** | AP Physics 1 & C | `CRS-APP-101` | Advanced Placement (AP) |
+| **Geometry** | High School Geometry Honors | `CRS-GEO-101` | High School Mathematics |
+| **Summer camp** | Summer Camp & Academic Tutoring | `CRS-SMP-101` | Summer & Camps |
+| **College Essay workshop** | College Essay Workshop & Writing | `CRS-CEW-101` | College Counseling |
+| **SAT prep / SAT prep, College Essay** | SAT Prep & College Essay Workshop | `CRS-SAT-101`, `CRS-CEW-101` | Test Preparation |
+| **GT prep/ Math & Reading** | GT Prep (Gifted & Talented) | `CRS-GTP-101`, `CRS-MR-101` | Accelerated & GT |
+| **PAP Spanish** | PAP Spanish | `CRS-SPN-101` | World Languages |
+| **AP Chem , SAT prep** | AP Chemistry & SAT Prep | `CRS-APC-101`, `CRS-SAT-101` | AP & Test Prep |
+| **Hindi** | Hindi Language | `CRS-HIN-101` | World Languages |
+| **Alge 1** | Algebra 1 & PAP Algebra 2 | `CRS-ALG-101` | Mathematics |
+| **TSI prep** | TSI Prep | `CRS-TSI-101` | College Readiness |
+| **ESL** | ESL (English as a Second Language) | `CRS-ESL-101` | Language Acquisition |
+
+---
+
+## 6. How Parents and Students Log In
+
+1. Open the TopGrade CRM login screen.
+2. **For Parents:**
+   - Enter your personal email (e.g., `tanyeafowls@yahoo.com`) or your portal email (`parent.tanyea.fowls.5001@parents.topgrade.edu`).
+   - Enter password: `Parent@TopGrade2026`.
+   - Result: You will see your child's profile on the Parent Dashboard, and under the **Courses** tab you will only see their selected course stream (*Reading Comprehension*).
+3. **For Students:**
+   - Enter your Student Code (e.g., `TG-STU-2026-5001`) or your student email (`jacob.5001@student.topgrade.edu`).
+   - Enter password: `Student@TopGrade2026`.
+   - Result: You will see your own profile and enrolled course syllabus.
+
+---
+*Generated automatically by TopGrade CRM Enrollment & RBAC Synchronizer.*
