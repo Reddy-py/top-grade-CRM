@@ -1,7 +1,7 @@
 -- PostgreSQL Native DDL Architecture for TopGrade Student Management System
 
 -- 1. Create Enums
-CREATE TYPE user_role AS ENUM ('ADMIN', 'TEACHER', 'PARENT', 'STUDENT', 'ACCOUNTANT');
+CREATE TYPE user_role AS ENUM ('ADMIN', 'TEACHER', 'PARENT', 'STUDENT');
 CREATE TYPE student_status AS ENUM ('LEAD_INQUIRY', 'ACTIVE', 'INACTIVE_ARCHIVED');
 CREATE TYPE enrollment_status AS ENUM ('FORM_SUBMITTED', 'UNDER_REVIEW', 'APPROVED', 'ACTIVATED', 'DE_ENROLLED');
 CREATE TYPE payment_method AS ENUM ('CREDIT_CARD', 'CASH', 'BANK_TRANSFER', 'CHEQUE');

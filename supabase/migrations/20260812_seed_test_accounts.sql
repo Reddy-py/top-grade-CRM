@@ -61,9 +61,8 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- Execute Seeding for All 5 System Roles
+-- Execute Seeding for All 4 System Roles
 SELECT public.seed_test_user('admin@topgrade.edu', 'TopGrade2026!', 'Manikanta Admin', 'ADMIN');
-SELECT public.seed_test_user('accountant@topgrade.edu', 'TopGrade2026!', 'Priya Sharma (Accountant)', 'ACCOUNTANT');
 SELECT public.seed_test_user('teacher@topgrade.edu', 'TopGrade2026!', 'Vikram Teacher', 'TEACHER');
 SELECT public.seed_test_user('parent@topgrade.edu', 'TopGrade2026!', 'Suresh Kumar (Parent)', 'PARENT');
 SELECT public.seed_test_user('student@topgrade.edu', 'TopGrade2026!', 'Rahul Kumar (Student)', 'STUDENT');

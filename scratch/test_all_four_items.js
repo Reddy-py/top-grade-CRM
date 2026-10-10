@@ -39,15 +39,11 @@ async function run() {
   const health = await get('/api/health');
   console.log('Health check response:', health);
 
-  console.log('\n=== TEST 2: Accountant Role Resolution with sivareddy683970@gmail.com ===');
-  const roleRes = await post('/api/students/resolve-role', { identifier: 'sivareddy683970@gmail.com' });
-  console.log('Role resolved for sivareddy683970@gmail.com:', roleRes);
-
-  console.log('\n=== TEST 3: Birthday Scanner Endpoint ===');
+  console.log('\n=== TEST 2: Birthday Scanner Endpoint ===');
   const bdayRes = await post('/api/notifications/send-birthday-wishes', {});
   console.log('Birthday scan trigger result:', bdayRes);
 
-  console.log('\n=== TEST 4: Schedules List Endpoint (Auto-sync verification) ===');
+  console.log('\n=== TEST 3: Schedules List Endpoint (Auto-sync verification) ===');
   const schedList = await get('/api/schedules/list');
   console.log('Schedules count:', schedList?.data?.length || schedList?.length || 0);
 

@@ -14,7 +14,6 @@ async function run() {
   console.log('   GMAIL_USER:', process.env.GMAIL_USER);
   console.log('   GMAIL_SENDER_EMAIL:', process.env.GMAIL_SENDER_EMAIL);
   console.log('   ADMIN_EMAIL:', process.env.ADMIN_EMAIL);
-  console.log('   ACCOUNTANT_EMAIL:', process.env.ACCOUNTANT_EMAIL);
 
   console.log('\n2. Verifying Gmail SMTP Transporter:');
   const transporter = nodemailer.createTransport({
@@ -36,17 +35,6 @@ async function run() {
     console.error('   ❌ Admin login failed:', adminErr.message);
   } else {
     console.log(`   ✅ Admin Login OK! User ID: ${adminAuth.user.id}, Role: ${adminAuth.user.user_metadata?.role}`);
-  }
-
-  console.log('\n4. Verifying Accountant Supabase Auth Login:');
-  const { data: accAuth, error: accErr } = await client.auth.signInWithPassword({
-    email: 'sivareddy68397@gmail.com',
-    password: 'TopGrade2026!'
-  });
-  if (accErr) {
-    console.error('   ❌ Accountant login failed:', accErr.message);
-  } else {
-    console.log(`   ✅ Accountant Login OK! User ID: ${accAuth.user.id}, Role: ${accAuth.user.user_metadata?.role}`);
   }
 
   console.log('\n=== ALL TESTS PASSED SUCCESSFULLY! ===');
