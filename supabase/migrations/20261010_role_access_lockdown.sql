@@ -13,6 +13,7 @@
 -- ---------------------------------------------------------------------------
 -- 1. Remove the ACCOUNTANT role (only four logins)
 -- ---------------------------------------------------------------------------
+DROP TABLE IF EXISTS _former_accountants;
 CREATE TEMP TABLE _former_accountants AS
   SELECT id, email FROM public.profiles WHERE role = 'ACCOUNTANT';
 
@@ -86,25 +87,71 @@ AS $$
 $$;
 
 -- Schedule slots this login may see: teacher = own slots; parent/student = slots containing their child.
-CREATE OR REPLACE FUNCTION public.my_schedule_ids()
-RETURNS SETOF UUID
-LANGUAGE plpgsql STABLE SECURITY DEFINER
-SET search_path = public
-AS $$
-DECLARE r TEXT := public.get_current_user_role();
+DO $$
 BEGIN
-  IF r = 'TEACHER' THEN
-    RETURN QUERY
-      SELECT sc.id FROM public.schedules sc
-      WHERE lower(sc.teacher_id) = ANY (public.my_teacher_keys())
-         OR lower(sc.teacher_name) = ANY (public.my_teacher_names());
-  ELSIF r IN ('PARENT', 'STUDENT') THEN
-    RETURN QUERY
-      SELECT DISTINCT ss.schedule_id FROM public.schedule_students ss
-      JOIN public.students s ON (ss.student_id = s.id::text OR ss.student_code = s.student_id_code)
-      WHERE (r = 'STUDENT' AND (s.user_id = auth.uid() OR lower(s.email) = lower(auth.jwt() ->> 'email')))
-         OR (r = 'PARENT' AND EXISTS (
-              SELECT 1 FROM unnest(s.parent_emails) e WHERE lower(e) = lower(auth.jwt() ->> 'email')));
+  DROP FUNCTION IF EXISTS public.my_schedule_ids() CASCADE;
+  IF to_regclass('public.schedules') IS NULL THEN
+    EXECUTE $func$
+      CREATE OR REPLACE FUNCTION public.my_schedule_ids()
+      RETURNS SETOF TEXT
+      LANGUAGE plpgsql STABLE SECURITY DEFINER
+      SET search_path = public
+      AS $body$
+      BEGIN
+        RETURN;
+      END $body$;
+    $func$;
+  ELSIF EXISTS (
+    SELECT 1 FROM information_schema.columns 
+    WHERE table_schema = 'public' AND table_name = 'schedules' AND column_name = 'id' AND data_type = 'uuid'
+  ) THEN
+    EXECUTE $func$
+      CREATE OR REPLACE FUNCTION public.my_schedule_ids()
+      RETURNS SETOF UUID
+      LANGUAGE plpgsql STABLE SECURITY DEFINER
+      SET search_path = public
+      AS $body$
+      DECLARE r TEXT := public.get_current_user_role();
+      BEGIN
+        IF r = 'TEACHER' THEN
+          RETURN QUERY
+            SELECT sc.id FROM public.schedules sc
+            WHERE lower(sc.teacher_id) = ANY (public.my_teacher_keys())
+               OR lower(sc.teacher_name) = ANY (public.my_teacher_names());
+        ELSIF r IN ('PARENT', 'STUDENT') THEN
+          RETURN QUERY
+            SELECT DISTINCT ss.schedule_id FROM public.schedule_students ss
+            JOIN public.students s ON (ss.student_id = s.id::text OR ss.student_code = s.student_id_code)
+            WHERE (r = 'STUDENT' AND (s.user_id = auth.uid() OR lower(s.email) = lower(auth.jwt() ->> 'email')))
+               OR (r = 'PARENT' AND EXISTS (
+                    SELECT 1 FROM unnest(s.parent_emails) e WHERE lower(e) = lower(auth.jwt() ->> 'email')));
+        END IF;
+      END $body$;
+    $func$;
+  ELSE
+    EXECUTE $func$
+      CREATE OR REPLACE FUNCTION public.my_schedule_ids()
+      RETURNS SETOF TEXT
+      LANGUAGE plpgsql STABLE SECURITY DEFINER
+      SET search_path = public
+      AS $body$
+      DECLARE r TEXT := public.get_current_user_role();
+      BEGIN
+        IF r = 'TEACHER' THEN
+          RETURN QUERY
+            SELECT sc.id FROM public.schedules sc
+            WHERE lower(sc.teacher_id) = ANY (public.my_teacher_keys())
+               OR lower(sc.teacher_name) = ANY (public.my_teacher_names());
+        ELSIF r IN ('PARENT', 'STUDENT') THEN
+          RETURN QUERY
+            SELECT DISTINCT ss.schedule_id FROM public.schedule_students ss
+            JOIN public.students s ON (ss.student_id = s.id::text OR ss.student_code = s.student_id_code)
+            WHERE (r = 'STUDENT' AND (s.user_id = auth.uid() OR lower(s.email) = lower(auth.jwt() ->> 'email')))
+               OR (r = 'PARENT' AND EXISTS (
+                    SELECT 1 FROM unnest(s.parent_emails) e WHERE lower(e) = lower(auth.jwt() ->> 'email')));
+        END IF;
+      END $body$;
+    $func$;
   END IF;
 END $$;
 
@@ -127,13 +174,20 @@ BEGIN
       SELECT s.id FROM public.students s
       WHERE EXISTS (SELECT 1 FROM unnest(s.parent_emails) e WHERE lower(e) = lower(auth.jwt() ->> 'email'));
   ELSIF r = 'TEACHER' THEN
-    RETURN QUERY
-      SELECT s.id FROM public.students s
-      WHERE lower(s.teacher) = ANY (public.my_teacher_names())
-         OR EXISTS (
-              SELECT 1 FROM public.schedule_students ss
-              WHERE ss.schedule_id IN (SELECT public.my_schedule_ids())
-                AND (ss.student_id = s.id::text OR ss.student_code = s.student_id_code));
+    IF to_regclass('public.schedule_students') IS NOT NULL AND to_regclass('public.schedules') IS NOT NULL THEN
+      RETURN QUERY EXECUTE $q$
+        SELECT s.id FROM public.students s
+        WHERE lower(s.teacher) = ANY (public.my_teacher_names())
+           OR EXISTS (
+                SELECT 1 FROM public.schedule_students ss
+                WHERE ss.schedule_id IN (SELECT public.my_schedule_ids())
+                  AND (ss.student_id = s.id::text OR ss.student_code = s.student_id_code))
+      $q$;
+    ELSE
+      RETURN QUERY
+        SELECT s.id FROM public.students s
+        WHERE lower(s.teacher) = ANY (public.my_teacher_names());
+    END IF;
   END IF;
 END $$;
 
@@ -157,13 +211,20 @@ LANGUAGE plpgsql STABLE SECURITY DEFINER
 SET search_path = public
 AS $$
 DECLARE r TEXT := public.get_current_user_role();
+DECLARE has_sched BOOLEAN := FALSE;
 BEGIN
   IF r IS NULL OR r = 'ADMIN' THEN RETURN r = 'ADMIN'; END IF;
-  RETURN EXISTS (
-    SELECT 1 FROM public.schedules sc
-    WHERE sc.id IN (SELECT public.my_schedule_ids())
-      AND (sc.course_id = c_id::text OR lower(sc.course_name) = lower(c_name))
-  ) OR (r <> 'TEACHER' AND EXISTS (
+  IF to_regclass('public.schedules') IS NOT NULL THEN
+    EXECUTE $q$
+      SELECT EXISTS (
+        SELECT 1 FROM public.schedules sc
+        WHERE sc.id IN (SELECT public.my_schedule_ids())
+          AND (sc.course_id = $1::text OR lower(sc.course_name) = lower($2))
+      )
+    $q$ INTO has_sched USING c_id, c_name;
+    IF has_sched THEN RETURN TRUE; END IF;
+  END IF;
+  RETURN (r <> 'TEACHER' AND EXISTS (
     SELECT 1 FROM public.students s
     WHERE s.id IN (SELECT public.my_student_ids()) AND lower(s.program) = lower(c_name)
   ));

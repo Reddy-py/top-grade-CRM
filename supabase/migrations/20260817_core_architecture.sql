@@ -1,13 +1,28 @@
 -- PostgreSQL Native DDL Architecture for TopGrade Student Management System
 
--- 1. Create Enums
-CREATE TYPE user_role AS ENUM ('ADMIN', 'TEACHER', 'PARENT', 'STUDENT');
-CREATE TYPE student_status AS ENUM ('LEAD_INQUIRY', 'ACTIVE', 'INACTIVE_ARCHIVED');
-CREATE TYPE enrollment_status AS ENUM ('FORM_SUBMITTED', 'UNDER_REVIEW', 'APPROVED', 'ACTIVATED', 'DE_ENROLLED');
-CREATE TYPE payment_method AS ENUM ('CREDIT_CARD', 'CASH', 'BANK_TRANSFER', 'CHEQUE');
-CREATE TYPE reschedule_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED_NOTICE_WINDOW', 'REJECTED_CAP_EXCEEDED');
-CREATE TYPE media_approval_status AS ENUM ('PENDING_CLEARANCE', 'APPROVED', 'REJECTED');
-CREATE TYPE ledger_entry_type AS ENUM ('DEBIT', 'CREDIT');
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'user_role') THEN
+    CREATE TYPE user_role AS ENUM ('ADMIN', 'TEACHER', 'PARENT', 'STUDENT');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'student_status') THEN
+    CREATE TYPE student_status AS ENUM ('LEAD_INQUIRY', 'ACTIVE', 'INACTIVE_ARCHIVED');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'enrollment_status') THEN
+    CREATE TYPE enrollment_status AS ENUM ('FORM_SUBMITTED', 'UNDER_REVIEW', 'APPROVED', 'ACTIVATED', 'DE_ENROLLED');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'payment_method') THEN
+    CREATE TYPE payment_method AS ENUM ('CREDIT_CARD', 'CASH', 'BANK_TRANSFER', 'CHEQUE');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'reschedule_status') THEN
+    CREATE TYPE reschedule_status AS ENUM ('PENDING', 'APPROVED', 'REJECTED_NOTICE_WINDOW', 'REJECTED_CAP_EXCEEDED');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'media_approval_status') THEN
+    CREATE TYPE media_approval_status AS ENUM ('PENDING_CLEARANCE', 'APPROVED', 'REJECTED');
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'ledger_entry_type') THEN
+    CREATE TYPE ledger_entry_type AS ENUM ('DEBIT', 'CREDIT');
+  END IF;
+END $$;
 
 -- 2. Core Tables
 CREATE TABLE IF NOT EXISTS users (
@@ -169,8 +184,8 @@ CREATE TABLE IF NOT EXISTS ledger_entries (
 );
 
 -- 3. Indexes for Query Performance
-CREATE INDEX idx_students_status ON students(status);
-CREATE INDEX idx_students_email ON students(email);
-CREATE INDEX idx_enrollments_status ON enrollments(status);
-CREATE INDEX idx_reschedule_student ON reschedule_requests(student_id);
-CREATE INDEX idx_invoices_student ON invoices(student_id);
+CREATE INDEX IF NOT EXISTS idx_students_status ON students(status);
+CREATE INDEX IF NOT EXISTS idx_students_email ON students(email);
+CREATE INDEX IF NOT EXISTS idx_enrollments_status ON enrollments(status);
+CREATE INDEX IF NOT EXISTS idx_reschedule_student ON reschedule_requests(student_id);
+CREATE INDEX IF NOT EXISTS idx_invoices_student ON invoices(student_id);
