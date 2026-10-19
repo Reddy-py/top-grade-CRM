@@ -1,0 +1,10 @@
+{
+  "name": "top-grade-crm",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "export:keep": "npm --prefix topgrade-backend run export:keep",
+    "reset:supabase": "npm --prefix topgrade-backend run reset:supabase",
+    "import:families": "npm --prefix topgrade-backend run import:families"
+  }
+}

@@ -2,10 +2,27 @@
 node_modules/
 dist/
 
-# Environment files
+# Environment and secrets
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
+*.pem
+*.key
+*.cert
+
+# Sensitive data, exports, spreadsheets and screenshots
+scratch/
+private-exports/
+screenshots/
+screenshots_before/
+screenshots_after/
+*.xlsx
+*.xls
+*.csv
+*.png
+*.jpg
+*.jpeg
+*.webp
 
 # Sensitive institutional data files
 topgrade-backend/data/
@@ -18,3 +35,4 @@ pgserver*/
 migrate_*
 test_check_*
 topgrade-crm-project.zip
+
