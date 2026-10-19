@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: topgrade-backend
+    env: node
+    rootDir: topgrade-backend
+    buildCommand: npm ci && npm run build
+    startCommand: node dist/index.js
+    healthCheckPath: /api/health
+    plan: free # Note: Free instance is fine for demo; go-live requires an always-on paid instance for the email scheduler
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: SIMULATE_EMAILS
+        value: "true" # Demo backend requirement: no real emails sent until approved
+      - key: DISABLE_PAYMENTS
+        value: "true" # Demo backend requirement: stripe webhook and payment routes disabled
+      - key: FRONTEND_URL
+        value: https://topgrade-vert.vercel.app
+      - key: CORS_ORIGIN
+        value: https://topgrade-vert.vercel.app
+      - key: ADMIN_EMAIL
+        value: tglbiz101@gmail.com
+      - key: SUPABASE_URL
+        sync: false # Set manually in Render dashboard with NEW Supabase project URL
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false # Set manually in Render dashboard with NEW Supabase service role key
+      - key: SUPABASE_ANON_KEY
+        sync: false # Set manually in Render dashboard with NEW Supabase anon key
+      - key: ADMIN_INITIAL_PASSWORD
+        sync: false # Set manually in Render dashboard
+      - key: DEFAULT_INITIAL_PASSWORD
+        sync: false # Set manually in Render dashboard

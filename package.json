@@ -5,6 +5,7 @@
   "scripts": {
     "export:keep": "npm --prefix topgrade-backend run export:keep",
     "reset:supabase": "npm --prefix topgrade-backend run reset:supabase",
+    "setup:project": "npm --prefix topgrade-backend run setup:project",
     "import:families": "npm --prefix topgrade-backend run import:families"
   }
 }
