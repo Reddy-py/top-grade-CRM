@@ -42,12 +42,14 @@ For a fresh Supabase database or a schema reset (`npm run reset:supabase`), exec
     - Referral codes with privacy, referred student tracking, audience campaigns, and engagement sequences.
 17. `supabase/migrations/20261021_task8b_hardening_and_password_change.sql`
     - Forced password change flag `must_change_password` on `public.profiles` for accounts provisioned with shared initial passwords.
+18. `supabase/migrations/20261022_task15_client_changes_and_remove_referrals.sql`
+    - Client changes: drop referrals completely, add course duration & rate columns, btree_gist exclusion constraints for teacher and room collisions, trigger for student collision prevention, performance indexes.
 
 ---
 
 ## Verification Check Query
 
-To verify that all tables and columns are properly configured after running all 17 migrations:
+To verify that all tables and columns are properly configured after running all 18 migrations:
 
 ```sql
 SELECT
@@ -60,7 +62,13 @@ SELECT
     to_regclass('public.institute_settings') IS NOT NULL AS settings_exists,
     to_regclass('public.student_enrollments') IS NOT NULL AS enrollments_exists,
     to_regclass('public.email_templates') IS NOT NULL AS templates_exists,
-    to_regclass('public.referral_codes') IS NOT NULL AS referrals_exists,
+    to_regclass('public.referral_codes') IS NULL AS referrals_dropped,
+    EXISTS (
+        SELECT 1 FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = 'courses'
+          AND column_name = 'duration_months'
+    ) AS course_duration_months_exists,
     EXISTS (
         SELECT 1 FROM information_schema.columns
         WHERE table_schema = 'public'

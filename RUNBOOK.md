@@ -88,24 +88,10 @@ In the Supabase Dashboard, navigate to **Authentication > URL Configuration**:
 ### Step 2: Execute Database Migrations
 Follow the exact 17-step numerical sequence specified in [RUN_ORDER.md](file:///c:/Users/91778/Downloads/PROJECTS/top%20grade%20CRM/RUN_ORDER.md):
 ```bash
-# Connect via psql or Supabase CLI:
-psql "$DATABASE_URL" -f supabase/migrations/20260812_rbac_setup.sql
-psql "$DATABASE_URL" -f supabase/migrations/20260812_seed_test_accounts.sql
-psql "$DATABASE_URL" -f supabase/migrations/20260817_core_architecture.sql
-psql "$DATABASE_URL" -f supabase/migrations/20260910_schedules_and_history.sql
-psql "$DATABASE_URL" -f supabase/migrations/20260914_exam_date_and_addresses.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261010_role_access_lockdown.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261011_student_dossiers.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261012_email_log.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261013_tokens_and_slot_claims.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261014_attendance_records.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261015_schedules_and_single_store.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261016_institute_settings.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261017_hour_based_classes_and_enrollments.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261018_task4_students_teachers_courses_schedule.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261019_email_templates_and_automation.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261020_growth_engagement_and_referrals.sql
-psql "$DATABASE_URL" -f supabase/migrations/20261021_task8b_hardening_and_password_change.sql
+# Connect via psql or Supabase CLI to apply all migrations in order (1 through 18) per RUN_ORDER.md:
+for f in $(grep -o 'supabase/migrations/[^`]*\.sql' RUN_ORDER.md); do
+  psql "$DATABASE_URL" -f "$f"
+done
 ```
 
 Verify migration success with the verification query in `RUN_ORDER.md`.
