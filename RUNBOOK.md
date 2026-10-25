@@ -14,7 +14,7 @@ graph TD
   SPA -->|Auth & Live Subscriptions| Supabase[(Supabase Cloud<br/>PostgreSQL + Auth + Storage)]
   API -->|Service Role DB Access| Supabase
   API -->|SMTP Port 587| Mailer[Email Transport<br/>Gmail SMTP / Resend / SendGrid]
-  API -->|Webhook Signature Check| Stripe[Stripe Payment Gateway]
+  API -->|Webhook Signature Check| BankFeed[Bank Feed / Direct Bank Webhook]
 ```
 
 ### 1.1. Backend Hosting (Always-On / Does Not Sleep)
@@ -248,11 +248,11 @@ If a user forgets their password:
 4. Redeploy the backend.
 5. In Supabase Dashboard, invalidate the revoked key.
 
-#### C. Rotating Stripe Keys
-1. In Stripe Dashboard, go to **Developers > API Keys** and **Webhooks**.
-2. Roll Secret Key: generate a new secret key with a 12-hour grace period for the old key.
-3. Update `STRIPE_SECRET_KEY` on the backend host.
-4. If rotating the webhook signing secret: add a new endpoint, update `STRIPE_WEBHOOK_SECRET` on backend, verify events receive 200, then delete old webhook.
+#### C. Rotating Bank Integration Webhook Secret
+1. If direct bank feed webhooks are configured: generate a new random 32-character secret.
+2. Update `BANK_WEBHOOK_SECRET` on the backend host.
+3. Update the signed webhook receiver secret with your bank partner.
+4. Verify incoming bank transaction pings return 200 OK.
 
 ---
 
@@ -323,7 +323,7 @@ Every in-app rate limit injects standard `Retry-After: <seconds>` headers into t
 | `POST /api/auth/login` | 15 req/min | 60 sec | 5 consecutive bad credentials lock IP & identifier for 15 min (900s) |
 | `POST /api/students/request-password-reset` | 15 req/min | 60 sec | Returns 429 with remaining reset window seconds |
 | Public forms (`/api/leads/public`, `/api/admissions/*`) | 20 req/min | 60 sec | Throttles bots and spam admission submissions |
-| Webhooks (`/api/leads/webhook`, `/api/payments/stripe/webhook`) | 120 req/min | 60 sec | High burst allowance for genuine partner syncs |
+| Webhooks (`/api/leads/webhook`, `/api/payments/bank-webhook`) | 120 req/min | 60 sec | High burst allowance for genuine partner syncs |
 | Public Health Check (`/api/health`) | Unrestricted | N/A | Cached 30s in-memory; 0 DB queries during TTL |
 
 ### 5.2. Edge / CDN Layer Equivalents (Cloudflare, AWS WAF, Nginx)

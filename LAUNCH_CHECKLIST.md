@@ -20,11 +20,18 @@ All API credentials, database keys, and email passwords that were ever pasted in
   3. Delete the previously generated temporary password (`ldar kjyn plhw ytxj`).
   4. Generate a new App Password named `TopGrade-Production-Live`.
   5. Update `GMAIL_APP_PASSWORD` in your production backend environment.
-- [ ] **Stripe Production Secret & Webhook Secret**:
-  1. In the [Stripe Dashboard](https://dashboard.stripe.com), switch to **Live Mode**.
-  2. Generate a new restricted secret key (`sk_live_...`).
-  3. Register the production webhook URL `https://api.topgradeacademy.com/api/payments/stripe/webhook`.
-  4. Configure `STRIPE_SECRET_KEY` and `STRIPE_WEBHOOK_SECRET` on the backend host.
+- [ ] **Stripe Payment Gateway & Live Key Provisioning**:
+  1. Open the [Stripe Dashboard](https://dashboard.stripe.com) in **Live Mode**.
+  2. Under **Developers** > **API keys**, obtain your production `STRIPE_SECRET_KEY` (`sk_live_...`).
+  3. Under **Developers** > **Webhooks**, create the live webhook pointing to `https://app.topgradeacademy.com/api/payments/stripe-webhook`. Configure the 6 required events: `checkout.session.completed`, `checkout.session.expired`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`, `charge.refunded`, `charge.dispute.created`.
+  4. Obtain the live signing secret `STRIPE_WEBHOOK_SECRET` (`whsec_...`).
+  5. **CRITICAL HOST-ONLY RULE**: Live Stripe keys (`sk_live_...` and `whsec_...`) must **ONLY** be entered directly into the production host environment variables (e.g., Render, Railway, AWS ECS). They must **NEVER** be committed to the git repository, stored in `.env.example`, or pasted into chat transcripts.
+  6. Sign in to the TopGrade CRM Admin Portal > **Fees & Payments** and confirm the **Payment Infrastructure System Check** row displays `Stripe LIVE Mode` and `Webhook Signed HMAC` (green badges).
+- [ ] **Bank Integration & Zelle Configuration**:
+  1. Open the Admin Settings > Payments tab.
+  2. Verify institutional Zelle coordinates (`zelle_display_name`, `zelle_tag`, `zelle_email`, `zelle_phone`).
+  3. Ensure `pending_order_expiry_days` is configured (default 7 days).
+  4. If automated bank feed ingestion is used, configure `BANK_WEBHOOK_SECRET` on the backend host.
 - [ ] **Admin Default Password**:
   - Ensure `ADMIN_INITIAL_PASSWORD` and `DEFAULT_INITIAL_PASSWORD` in production `.env` are set to cryptographically random strings (minimum 16 characters with symbols).
 

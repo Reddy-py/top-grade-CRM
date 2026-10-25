@@ -14,8 +14,6 @@ services:
         value: 10000
       - key: SIMULATE_EMAILS
         value: "true" # Demo backend requirement: no real emails sent until approved
-      - key: DISABLE_PAYMENTS
-        value: "true" # Demo backend requirement: stripe webhook and payment routes disabled
       - key: FRONTEND_URL
         value: https://topgrade-vert.vercel.app
       - key: CORS_ORIGIN

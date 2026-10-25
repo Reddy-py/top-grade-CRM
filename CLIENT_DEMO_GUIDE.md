@@ -21,9 +21,8 @@ During this demonstration, two strict safety switches are actively enforced:
 1. **Email Simulation (`SIMULATE_EMAILS=true`)**:
    - **Why it is off:** Prevents real emails from accidentally being sent to parents and students imported from historical spreadsheets.
    - **How it works:** All system notifications, login links, and class notices are safely logged to the internal database (`email_log`) and can be reviewed in the **Settings → Delivery Log** tab without dispatching external SMTP traffic.
-2. **Payment Processing Disabled (`DISABLE_PAYMENTS=true`)**:
-   - **Why it is off:** Disables live Stripe charges and credit card processing for testing safety.
-   - **How it works:** Parents and admins can inspect student token balances, fee schedules, and ledger entries without incurring financial transactions.
+2. **Bank-Verified Reconciliation Workflow**:
+   - **How it works:** Real bank CSV statements or webhooks are reconciled against pending orders. No credit cards or unverified payments are accepted. Hours are credited strictly upon admin bank reconciliation.
 
 > [!IMPORTANT]
 > **Privacy Rule:** Never log into any real imported family account during a demo. The initial login for any family forces a password change. Always use the dedicated **Demo Family** credentials detailed below.
@@ -68,7 +67,7 @@ Follow these steps in order for a seamless presentation:
 3. **What to highlight:**
    - **Isolated Supabase Host:** Demonstrates that the application is running against the new dedicated database, with an automatic safety block if any legacy host is referenced.
    - **Schema Integrity:** Green verification status across all 12 core tables (`profiles`, `students`, `courses`, `schedules`, `locations`, `attendance`, `token_wallets`, etc.).
-   - **Safety Mode Badges:** Visual confirmation that `SIMULATE_EMAILS` and `DISABLE_PAYMENTS` are active.
+   - **Safety Mode Badges:** Visual confirmation that `SIMULATE_EMAILS` is active.
    - **Migration Readiness Counts:** Shows the exact number of parent and student accounts awaiting their initial secure sign-in.
 
 ---
