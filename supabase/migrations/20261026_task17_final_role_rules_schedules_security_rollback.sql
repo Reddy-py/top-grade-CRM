@@ -26,3 +26,9 @@ DROP POLICY IF EXISTS "admin_manage_student_parents" ON public.student_parents;
 DROP TABLE IF EXISTS public.student_parents;
 
 DROP INDEX IF EXISTS idx_profiles_lower_email;
+
+ALTER TABLE public.courses DROP CONSTRAINT IF EXISTS chk_courses_class_length;
+ALTER TABLE public.courses DROP COLUMN IF EXISTS class_length;
+
+ALTER TABLE public.schedules DROP CONSTRAINT IF EXISTS chk_schedules_duration_hours;
+ALTER TABLE public.schedules DROP COLUMN IF EXISTS duration_hours;

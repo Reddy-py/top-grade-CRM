@@ -142,3 +142,41 @@ DROP POLICY IF EXISTS "users_view_own_sessions" ON public.user_sessions;
 CREATE POLICY "users_view_own_sessions" ON public.user_sessions
     FOR SELECT
     USING (user_id = auth.uid());
+
+-- 8. Course class length (1 or 2 hours) and schedule duration_hours
+ALTER TABLE public.courses ADD COLUMN IF NOT EXISTS class_length INT DEFAULT 1;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'chk_courses_class_length') THEN
+        ALTER TABLE public.courses ADD CONSTRAINT chk_courses_class_length CHECK (class_length IN (1, 2));
+    END IF;
+END $$;
+
+ALTER TABLE public.schedules ADD COLUMN IF NOT EXISTS duration_hours INT DEFAULT 1;
+
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'chk_schedules_duration_hours') THEN
+        ALTER TABLE public.schedules ADD CONSTRAINT chk_schedules_duration_hours CHECK (duration_hours IN (1, 2));
+    END IF;
+END $$;
+
+CREATE OR REPLACE FUNCTION public.sync_schedule_minutes() RETURNS TRIGGER AS $$
+BEGIN
+  IF NEW.duration_hours IS NULL OR NEW.duration_hours NOT IN (1, 2) THEN
+    NEW.duration_hours := 1;
+  END IF;
+  IF NEW.start_minute IS NULL OR NEW.start_minute = 0 THEN
+    NEW.start_minute := public.time_to_minutes(NEW.start_time);
+  END IF;
+  IF NEW.end_minute IS NULL OR NEW.end_minute = 0 OR NEW.end_minute <= NEW.start_minute THEN
+    NEW.end_minute := public.time_to_minutes(NEW.end_time);
+    IF NEW.end_minute <= NEW.start_minute THEN
+      NEW.end_minute := NEW.start_minute + (NEW.duration_hours * 60);
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
