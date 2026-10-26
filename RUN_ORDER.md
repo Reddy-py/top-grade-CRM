@@ -44,6 +44,12 @@ For a fresh Supabase database or a schema reset (`npm run reset:supabase`), exec
     - Forced password change flag `must_change_password` on `public.profiles` for accounts provisioned with shared initial passwords.
 18. `supabase/migrations/20261022_task15_client_changes_and_remove_referrals.sql`
     - Client changes: drop referrals completely, add course duration & rate columns, btree_gist exclusion constraints for teacher and room collisions, trigger for student collision prevention, performance indexes.
+19. `supabase/migrations/20261025_task16_zelle_payment_reconciliation.sql`
+    - Zelle automated and manual payment reconciliation with receipts and token credit.
+20. `supabase/migrations/20261025_task16b_dual_payments_stripe_and_zelle.sql`
+    - Dual payment methods: Stripe hosted card checkout and Zelle reconciliation.
+21. `supabase/migrations/20261026_task17_final_role_rules_schedules_security.sql`
+    - TASK 17 Database Guarantees: Unique lower(email) index on profiles, student_parents table, sibling uniqueness trigger, institute_settings self_enrollment_mode, course fee structure audit, and server-side user_sessions.
 
 ---
 
