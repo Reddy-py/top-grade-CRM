@@ -293,3 +293,4 @@ CREATE TABLE IF NOT EXISTS public.announcement_deliveries (
   sent_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+

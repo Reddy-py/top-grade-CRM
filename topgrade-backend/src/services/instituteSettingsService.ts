@@ -111,10 +111,11 @@ export function emailFooter(override?: Partial<InstituteSettings>): string {
   const s = override ? { ...cachedSettings, ...override } : getCachedInstituteSettings();
   const address = formatPostalAddress(s);
   const name = s.institute_name?.trim() || "Top Grade Learning";
+  const tz = s.timezone || "America/Chicago";
   if (!address) {
-    return name;
+    return `${name} | Operating Timezone: ${tz}`;
   }
-  return `${name} | ${address}`;
+  return `${name} | ${address} | Operating Timezone: ${tz}`;
 }
 
 /**
@@ -155,10 +156,11 @@ export async function getInstituteSettings(forceRefresh = false): Promise<Instit
       .maybeSingle();
 
     if (!error && data) {
+      const resolvedTz = data.institute_timezone || data.timezone || process.env.INSTITUTE_TIMEZONE || "America/Chicago";
       cachedSettings = {
         ...DEFAULT_INSTITUTE_SETTINGS,
         ...data,
-        timezone: data.timezone || process.env.INSTITUTE_TIMEZONE || "America/New_York",
+        timezone: resolvedTz,
         program_types: Array.isArray(data.program_types) && data.program_types.length > 0 ? data.program_types : (cachedSettings.program_types || [...DEFAULT_PROGRAM_TYPES]),
         course_categories: Array.isArray(data.course_categories) && data.course_categories.length > 0 ? data.course_categories : (cachedSettings.course_categories || [...DEFAULT_COURSE_CATEGORIES]),
       };
@@ -191,10 +193,11 @@ export async function updateInstituteSettings(updates: Partial<InstituteSettings
       .single();
 
     if (!error && data) {
+      const resolvedTz = data.institute_timezone || data.timezone || process.env.INSTITUTE_TIMEZONE || "America/Chicago";
       cachedSettings = {
         ...DEFAULT_INSTITUTE_SETTINGS,
         ...data,
-        timezone: data.timezone || process.env.INSTITUTE_TIMEZONE || "America/New_York",
+        timezone: resolvedTz,
         program_types: Array.isArray(data.program_types) && data.program_types.length > 0 ? data.program_types : (updates.program_types || cachedSettings.program_types || [...DEFAULT_PROGRAM_TYPES]),
         course_categories: Array.isArray(data.course_categories) && data.course_categories.length > 0 ? data.course_categories : (updates.course_categories || cachedSettings.course_categories || [...DEFAULT_COURSE_CATEGORIES]),
       };
@@ -209,7 +212,7 @@ export async function updateInstituteSettings(updates: Partial<InstituteSettings
   cachedSettings = {
     ...cachedSettings,
     ...updates,
-    timezone: updates.timezone || cachedSettings.timezone || "America/New_York",
+    timezone: updates.timezone || (updates as any).institute_timezone || cachedSettings.timezone || "America/Chicago",
     program_types: updates.program_types || cachedSettings.program_types || [...DEFAULT_PROGRAM_TYPES],
     course_categories: updates.course_categories || cachedSettings.course_categories || [...DEFAULT_COURSE_CATEGORIES],
     updated_at: new Date().toISOString(),
