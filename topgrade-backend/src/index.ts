@@ -71,6 +71,7 @@ import {
   getCorsOptions,
   databaseHealthHandler,
   adminSystemHealthHandler,
+  adminReconcileLedgerHandler,
   adminEnvironmentCheckHandler,
   centralizedErrorHandler,
   registerGracefulShutdown
@@ -414,6 +415,9 @@ app.get("/api/health", databaseHealthHandler);
 
 // Admin-only detailed diagnostics endpoint: latency, uptime, memory, database connection
 app.get("/api/admin/system-health", authenticateJwt, authorizePermission("dashboard.view"), adminSystemHealthHandler);
+
+// Admin-only ledger reconciliation endpoint
+app.get("/api/admin/reconcile-ledger", authenticateJwt, authorizePermission("settings.view"), adminReconcileLedgerHandler);
 
 // Admin-only environment & migration check endpoint
 app.get("/api/admin/environment-check", authenticateJwt, authorizePermission("settings.view"), adminEnvironmentCheckHandler);

@@ -223,12 +223,21 @@ export async function databaseHealthHandler(_req: Request, res: Response): Promi
   res.status(statusCode).json({ status: health.status });
 }
 
+import { reconcileLedgerService } from "../services/reconciliationService.js";
+
 /**
- * Admin-only system health metrics: includes latency, uptime, and detailed diagnostics.
+ * Admin-only system health metrics: includes latency, uptime, ledger reconciliation, and detailed diagnostics.
  */
 export async function adminSystemHealthHandler(_req: Request, res: Response): Promise<void> {
   const health = await getOrUpdateHealth();
   const statusCode = health.status === "healthy" ? 200 : 503;
+
+  let ledgerReconciliation: any = null;
+  try {
+    ledgerReconciliation = await reconcileLedgerService();
+  } catch (recErr: any) {
+    ledgerReconciliation = { healthy: false, error: recErr?.message };
+  }
 
   res.status(statusCode).json({
     status: health.status,
@@ -237,9 +246,28 @@ export async function adminSystemHealthHandler(_req: Request, res: Response): Pr
     uptime: Math.round(process.uptime()),
     cachedCheckAgeMs: Date.now() - health.lastChecked,
     memoryUsage: process.memoryUsage(),
+    ledgerReconciliation,
     timestamp: new Date().toISOString(),
     ...(health.error ? { error: health.error } : {})
   });
+}
+
+/**
+ * Admin-only ledger reconciliation endpoint
+ */
+export async function adminReconcileLedgerHandler(_req: Request, res: Response): Promise<void> {
+  try {
+    const result = await reconcileLedgerService();
+    res.status(200).json({
+      success: true,
+      data: result
+    });
+  } catch (err: any) {
+    res.status(500).json({
+      success: false,
+      message: err.message || "Failed to reconcile ledger"
+    });
+  }
 }
 
 /**

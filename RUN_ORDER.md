@@ -50,6 +50,8 @@ For a fresh Supabase database or a schema reset (`npm run reset:supabase`), exec
     - Dual payment methods: Stripe hosted card checkout and Zelle reconciliation.
 21. `supabase/migrations/20261026_task17_final_role_rules_schedules_security.sql`
     - TASK 17 Database Guarantees: Unique lower(email) index on profiles, student_parents table, sibling uniqueness trigger, institute_settings self_enrollment_mode, course fee structure audit, and server-side user_sessions.
+22. `supabase/migrations/20261114_task19_single_source_of_truth.sql`
+    - TASK 19 Single Source of Truth: Canonical `schedules`, `student_enrollments`, `token_wallets`, `token_ledger`, and `attendance`. Drops deprecated duplicate tables (`schedule_slots`, `schedule_students`, `bookings`, `hour_wallets`, `hour_ledger`). Adds `domain_events` transactional outbox table and `reconcile_token_ledger()` verification function. (Rollback: `20261114_task19_single_source_of_truth_rollback.sql`).
 
 ---
 
