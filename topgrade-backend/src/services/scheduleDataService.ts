@@ -1,6 +1,6 @@
 import { supabaseAdmin } from "../supabase.js";
 import { getLocationById } from "./locationService.js";
-import { ScheduleSlotService } from "./scheduleSlotService.js";
+import { ScheduleSlotService, cstDateTimeToUtc } from "./scheduleSlotService.js";
 import { getNextDayOfWeekDateStr } from "./instituteTime.js";
 
 export interface ScheduleStudent {
@@ -594,7 +594,7 @@ export class ScheduleDataService {
         updated_at: nowIso
       };
       if (payload.course_id) slotUpdates.course_id = payload.course_id;
-      if (payload.grade) slotUpdates.grade = payload.grade;
+      if ((payload as any).grade) slotUpdates.grade = (payload as any).grade;
       if (payload.teacher_id) {
         slotUpdates.teacher_id = payload.teacher_id;
       } else if (payload.open_for_teachers === true) {
