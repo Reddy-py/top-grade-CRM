@@ -6,6 +6,10 @@
     "export:keep": "npm --prefix topgrade-backend run export:keep",
     "reset:supabase": "npm --prefix topgrade-backend run reset:supabase",
     "setup:project": "npm --prefix topgrade-backend run setup:project",
-    "import:families": "npm --prefix topgrade-backend run import:families"
+    "import:families": "npm --prefix topgrade-backend run import:families",
+    "reset:learning-data": "npm --prefix topgrade-backend run reset:learning-data --",
+    "check:students-editable": "npm --prefix topgrade-backend run check:students-editable --",
+    "announce:test": "npm --prefix topgrade-backend run announce:test --",
+    "test:task18": "npm --prefix topgrade-backend run test:task18 --"
   }
 }
