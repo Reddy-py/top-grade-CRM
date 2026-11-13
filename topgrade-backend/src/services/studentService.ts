@@ -4,6 +4,7 @@ import { ensureLogin, deleteLogin, emailSetPasswordLink, normEmail, isValidEmail
 import { sendStudentAddedEmail, sendStudentUpdatedEmail } from "./studentNotices.js";
 import { sendExamGoodLuckWishes, sendBirthdayGreetings } from "./automatedEmailService.js";
 import { supabaseAdmin } from "../supabase.js";
+import { recordDomainEvent } from "./domainEventService.js";
 
 export interface CourseAllocation {
   courseName: string;
@@ -1079,6 +1080,18 @@ export async function createStudentService(payload: Partial<StudentDossier>) {
     console.warn("Notice sending new-student emails:", err);
   }
 
+  void recordDomainEvent({
+    type: "student.created",
+    entity: "students",
+    entity_id: newStudent.id || newStudent.studentCode || "student",
+    payload: {
+      student_id: newStudent.id,
+      student_code: newStudent.studentCode,
+      name: newStudent.fullName,
+      email: newStudent.email
+    }
+  });
+
   return newStudent;
 }
 
@@ -1323,6 +1336,17 @@ export async function updateStudentService(id: string, payload: Partial<StudentD
   // gets an email listing exactly what changed. Nothing is sent when no listed field changed.
   void sendStudentUpdatedEmail(existing, updated).catch(err => console.warn("Notice sending the update email:", err?.message));
 
+  void recordDomainEvent({
+    type: "student.updated",
+    entity: "students",
+    entity_id: updated.id || id,
+    payload: {
+      student_id: updated.id || id,
+      student_code: updated.studentCode,
+      name: updated.fullName
+    }
+  });
+
   return updated;
 }
 
@@ -1397,6 +1421,17 @@ export async function deleteStudentService(
     if (idx !== -1 && inMemoryStudentStore[idx]) {
       inMemoryStudentStore[idx].status = "ARCHIVED";
     }
+
+    void recordDomainEvent({
+      type: "student.archived",
+      entity: "students",
+      entity_id: studentId,
+      payload: {
+        student_id: studentId,
+        student_code: studentCode,
+        name: studentName
+      }
+    });
 
     return {
       success: true,

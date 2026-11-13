@@ -224,9 +224,10 @@ export async function databaseHealthHandler(_req: Request, res: Response): Promi
 }
 
 import { reconcileLedgerService } from "../services/reconciliationService.js";
+import { getDomainEventsHealth } from "../services/domainEventService.js";
 
 /**
- * Admin-only system health metrics: includes latency, uptime, ledger reconciliation, and detailed diagnostics.
+ * Admin-only system health metrics: includes latency, uptime, ledger reconciliation, domain outbox health, and detailed diagnostics.
  */
 export async function adminSystemHealthHandler(_req: Request, res: Response): Promise<void> {
   const health = await getOrUpdateHealth();
@@ -239,6 +240,13 @@ export async function adminSystemHealthHandler(_req: Request, res: Response): Pr
     ledgerReconciliation = { healthy: false, error: recErr?.message };
   }
 
+  let domainEventsHealth: any = null;
+  try {
+    domainEventsHealth = await getDomainEventsHealth();
+  } catch (dErr: any) {
+    domainEventsHealth = { pendingCount: 0, failedCount: 0, error: dErr?.message };
+  }
+
   res.status(statusCode).json({
     status: health.status,
     database: health.database,
@@ -247,6 +255,7 @@ export async function adminSystemHealthHandler(_req: Request, res: Response): Pr
     cachedCheckAgeMs: Date.now() - health.lastChecked,
     memoryUsage: process.memoryUsage(),
     ledgerReconciliation,
+    domainEvents: domainEventsHealth,
     timestamp: new Date().toISOString(),
     ...(health.error ? { error: health.error } : {})
   });

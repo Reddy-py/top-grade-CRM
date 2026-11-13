@@ -1,5 +1,6 @@
 import { supabaseAdmin } from "../supabase.js";
 import { instituteTimezone } from "./instituteTime.js";
+import { recordDomainEvent } from "./domainEventService.js";
 
 export interface ScheduleSlotDto {
   id: string;
@@ -379,6 +380,18 @@ export class ScheduleSlotService {
       throw new Error(`Failed to create schedule slot: ${insertErr.message}`);
     }
 
+    void recordDomainEvent({
+      type: "slot.created",
+      entity: "schedules",
+      entity_id: newSlot.id,
+      payload: {
+        course_id: newSlot.course_id,
+        teacher_id: newSlot.teacher_id,
+        duration_hours: durationHours,
+        max_capacity: maxStudents
+      }
+    });
+
     const createdList = await this.listSlots({ course_id: newSlot.course_id });
     const enriched = createdList.find(s => s.id === newSlot.id);
     if (!enriched) throw new Error("Slot created but failed to retrieve record.");
@@ -452,6 +465,13 @@ export class ScheduleSlotService {
       throw new Error(`Failed to update schedule slot: ${updateErr.message}`);
     }
 
+    void recordDomainEvent({
+      type: "slot.updated",
+      entity: "schedules",
+      entity_id: slotId,
+      payload: updates
+    });
+
     const updatedList = await this.listSlots();
     const enriched = updatedList.find(s => s.id === updated.id);
     if (!enriched) throw new Error("Slot updated but failed to retrieve record.");
@@ -495,6 +515,18 @@ export class ScheduleSlotService {
       .update({ status: "cancelled" })
       .eq("schedule_id", slotId)
       .eq("status", "scheduled");
+
+    void recordDomainEvent({
+      type: "slot.cancelled",
+      entity: "schedules",
+      entity_id: slotId,
+      payload: {
+        course_id: slot.course_id,
+        course_name: slot.course_name,
+        affected_students: enrollments,
+        reason
+      }
+    });
 
     return {
       success: true,
@@ -588,6 +620,18 @@ export class ScheduleSlotService {
       throw new Error(`Enrollment failed: ${enrErr.message}`);
     }
 
+    void recordDomainEvent({
+      type: "enrollment.created",
+      entity: "student_enrollments",
+      entity_id: enrollmentId,
+      payload: {
+        slot_id: slotId,
+        student_id: studentId,
+        course_id: slot.course_id,
+        duration_hours: requiredHours
+      }
+    });
+
     return {
       success: true,
       bookingId: newEnr.id
@@ -610,6 +654,17 @@ export class ScheduleSlotService {
       .from("student_enrollments")
       .update({ status: "ENDED", end_date: new Date().toISOString(), updated_at: new Date().toISOString() })
       .eq("id", bookingId);
+
+    void recordDomainEvent({
+      type: "enrollment.ended",
+      entity: "student_enrollments",
+      entity_id: bookingId,
+      payload: {
+        slot_id: enr.slot_id,
+        student_id: enr.student_id,
+        course_id: enr.course_id
+      }
+    });
 
     return {
       success: true,
@@ -745,6 +800,54 @@ export class ScheduleSlotService {
         remarks: remarks || null
       })
       .eq("id", attendanceId);
+
+    const eventType = prevStatus ? "attendance.corrected" : "attendance.marked";
+    void recordDomainEvent({
+      type: eventType,
+      entity: "attendance",
+      entity_id: attendanceId,
+      payload: {
+        slot_id: att.schedule_id,
+        student_id: att.student_id,
+        status,
+        prev_status: prevStatus,
+        hours_deducted: status === "present" ? durHours : 0
+      }
+    });
+
+    if (status === "present" && prevStatus !== "present") {
+      const { data: wCheck } = await supabaseAdmin
+        .from("token_wallets")
+        .select("balance")
+        .eq("student_id", att.student_id)
+        .eq("course_id", slot?.course_id || "general")
+        .maybeSingle();
+
+      if (wCheck && Number(wCheck.balance) < durHours) {
+        void recordDomainEvent({
+          type: "enrollment.paused",
+          entity: "student_enrollments",
+          entity_id: att.schedule_id,
+          payload: {
+            slot_id: att.schedule_id,
+            student_id: att.student_id,
+            course_id: slot?.course_id || "general",
+            remaining_hours: Number(wCheck.balance)
+          }
+        });
+      }
+    } else if (prevStatus === "present" && status !== "present") {
+      void recordDomainEvent({
+        type: "enrollment.resumed",
+        entity: "student_enrollments",
+        entity_id: att.schedule_id,
+        payload: {
+          slot_id: att.schedule_id,
+          student_id: att.student_id,
+          course_id: slot?.course_id || "general"
+        }
+      });
+    }
 
     return {
       success: true,

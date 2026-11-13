@@ -25,7 +25,8 @@
     "check:single-source": "tsx src/scripts/checkSingleSource.ts",
     "announce:test": "tsx src/scripts/announceTest.ts",
     "test:task18": "tsx src/scripts/testTask18Synthetic.ts",
-    "test:task19-part-b": "tsx src/scripts/testTask19PartB.ts"
+    "test:task19-part-b": "tsx src/scripts/testTask19PartB.ts",
+    "test:task19-part-c": "tsx src/scripts/testTask19PartC.ts"
   },
   "engines": {
     "node": ">=20.0.0"

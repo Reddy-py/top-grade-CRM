@@ -9,6 +9,7 @@ import { ScheduleDataService } from "../services/scheduleDataService.js";
 import { resolveTeacherIdentity } from "../services/teacherIdentity.js";
 import { ensureLogin, emailSetPasswordLink, generateTemporaryPassword, isValidEmail, normEmail } from "../services/studentAccounts.js";
 import { isRealEmail } from "../constants/domains.js";
+import { recordDomainEvent } from "../services/domainEventService.js";
 
 const router = express.Router();
 
@@ -365,6 +366,13 @@ export const updateTeacherHandler = async (req: express.Request, res: express.Re
   } catch (err: any) {
     console.warn("Notice Supabase teacher update:", err?.message);
   }
+
+  void recordDomainEvent({
+    type: "teacher.updated",
+    entity: "teachers",
+    entity_id: teacherId,
+    payload: updateRow
+  });
 
   res.status(200).json({
     success: true,

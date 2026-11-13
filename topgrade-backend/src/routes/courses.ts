@@ -7,6 +7,7 @@ import { getNextDayOfWeekDateStr } from "../services/instituteTime.js";
 import { authenticateJwt, type AuthenticatedRequest } from "../middleware/auth.js";
 import { getAccessScope, allowsCourse } from "../services/accessScope.js";
 import { getInstituteSettings, updateInstituteSettings } from "../services/instituteSettingsService.js";
+import { recordDomainEvent } from "../services/domainEventService.js";
 import { inMemoryStudentStore } from "../services/studentService.js";
 
 const router = express.Router();
@@ -877,6 +878,13 @@ export const editCourseHandler = async (req: express.Request, res: express.Respo
   }
 
   const updatedCourse = mapSupabaseCourseToCourseData(updatedData);
+
+  void recordDomainEvent({
+    type: "course.updated",
+    entity: "courses",
+    entity_id: existingCourse.id,
+    payload: updateRow
+  });
 
   res.status(200).json({
     success: true,
