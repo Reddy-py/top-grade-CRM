@@ -28,6 +28,7 @@ export interface InstituteSettings {
   saved_bank_csv_mapping?: Record<string, string>;
   card_enabled?: boolean;
   zelle_enabled?: boolean;
+  payments_enabled?: boolean;
   self_enrollment_mode?: "OFF" | "REQUEST" | "AUTO";
   created_at?: string;
   updated_at?: string;
@@ -58,6 +59,7 @@ export const DEFAULT_INSTITUTE_SETTINGS: InstituteSettings = {
   support_email: process.env.ADMIN_EMAIL || process.env.GMAIL_USER || "tglbiz101@gmail.com",
   currency: "usd",
   logo_url: "",
+  payments_enabled: false,
   program_types: [...DEFAULT_PROGRAM_TYPES],
   course_categories: [...DEFAULT_COURSE_CATEGORIES],
   engagement_welcome_series_enabled: true,
