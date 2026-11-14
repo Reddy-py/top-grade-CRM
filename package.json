@@ -10,6 +10,7 @@
     "reset:learning-data": "npm --prefix topgrade-backend run reset:learning-data --",
     "check:students-editable": "npm --prefix topgrade-backend run check:students-editable --",
     "check:single-source": "npm --prefix topgrade-backend run check:single-source",
+    "email:diagnose": "npm --prefix topgrade-backend run email:diagnose",
     "announce:test": "npm --prefix topgrade-backend run announce:test --",
     "test:task18": "npm --prefix topgrade-backend run test:task18 --"
   }
