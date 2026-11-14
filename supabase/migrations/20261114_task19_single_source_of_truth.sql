@@ -215,3 +215,40 @@ BEGIN
     ON lt.l_student_id = w.student_id AND lt.l_course_id = w.course_id;
 END;
 $$;
+
+-- 7. SUPABASE REALTIME PUBLICATION (PART D)
+-- Add canonical tables to supabase_realtime
+DO $$
+BEGIN
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.schedules;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.student_enrollments;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.attendance;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.token_wallets;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.token_ledger;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.courses;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.students;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.teachers;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.announcements;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+  BEGIN
+    ALTER PUBLICATION supabase_realtime ADD TABLE public.domain_events;
+  EXCEPTION WHEN OTHERS THEN NULL; END;
+END $$;
+
