@@ -12,6 +12,9 @@
     "check:single-source": "npm --prefix topgrade-backend run check:single-source",
     "email:diagnose": "npm --prefix topgrade-backend run email:diagnose",
     "announce:test": "npm --prefix topgrade-backend run announce:test --",
-    "test:task18": "npm --prefix topgrade-backend run test:task18 --"
+    "test:task18": "npm --prefix topgrade-backend run test:task18 --",
+    "test:task19-part-b": "npm --prefix topgrade-backend run test:task19-part-b",
+    "test:task19-part-c": "npm --prefix topgrade-backend run test:task19-part-c",
+    "test:task19-part-f": "npm --prefix topgrade-backend run test:task19-part-f"
   }
 }
