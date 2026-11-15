@@ -3,7 +3,36 @@
 -- Migration: 20261114_task19_single_source_of_truth.sql
 -- ============================================================================
 
--- 1. EXTEND PUBLIC.SCHEDULES (Single source of truth for all schedule slots)
+-- 0. COURSES COMPATIBILITY
+ALTER TABLE public.courses ADD COLUMN IF NOT EXISTS updated_at TIMESTAMPTZ DEFAULT now();
+
+-- 1. ENSURE PUBLIC.SCHEDULES (Single source of truth for all schedule slots)
+CREATE TABLE IF NOT EXISTS public.schedules (
+  id TEXT PRIMARY KEY,
+  course_id TEXT NOT NULL,
+  course_name TEXT NOT NULL,
+  teacher_id TEXT,
+  teacher_name TEXT,
+  day_of_week TEXT NOT NULL,
+  start_time TEXT NOT NULL,
+  end_time TEXT NOT NULL,
+  time_slot TEXT NOT NULL,
+  room TEXT DEFAULT 'Room 101',
+  location TEXT DEFAULT 'Main Academic Center',
+  max_capacity INT DEFAULT 15,
+  is_active BOOLEAN DEFAULT TRUE,
+  open_for_teachers BOOLEAN NOT NULL DEFAULT FALSE,
+  program TEXT DEFAULT 'TUTORING',
+  duration_hours NUMERIC(4, 2) DEFAULT 1.0,
+  grade_range TEXT DEFAULT 'All Grades',
+  start_at TIMESTAMPTZ,
+  end_at TIMESTAMPTZ,
+  notes TEXT,
+  status TEXT DEFAULT 'active',
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
 ALTER TABLE public.schedules
   ADD COLUMN IF NOT EXISTS duration_hours NUMERIC(4, 2) DEFAULT 1.0,
   ADD COLUMN IF NOT EXISTS grade_range TEXT DEFAULT 'All Grades',
@@ -67,7 +96,21 @@ BEGIN
   END IF;
 END $$;
 
--- 2. EXTEND PUBLIC.STUDENT_ENROLLMENTS (Single source of truth for enrollments)
+-- 2. ENSURE PUBLIC.STUDENT_ENROLLMENTS (Single source of truth for enrollments)
+CREATE TABLE IF NOT EXISTS public.student_enrollments (
+  id TEXT PRIMARY KEY,
+  student_id TEXT NOT NULL,
+  course_id TEXT NOT NULL,
+  slot_id TEXT,
+  plan TEXT DEFAULT 'HOURS',
+  hours_total INTEGER DEFAULT 0,
+  status TEXT DEFAULT 'ACTIVE',
+  paused_at TIMESTAMPTZ,
+  end_date TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
+);
+
 ALTER TABLE public.student_enrollments
   ADD COLUMN IF NOT EXISTS slot_id TEXT,
   ADD COLUMN IF NOT EXISTS paused_at TIMESTAMPTZ,
