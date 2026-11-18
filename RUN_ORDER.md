@@ -52,6 +52,8 @@ For a fresh Supabase database or a schema reset (`npm run reset:supabase`), exec
     - TASK 17 Database Guarantees: Unique lower(email) index on profiles, student_parents table, sibling uniqueness trigger, institute_settings self_enrollment_mode, course fee structure audit, and server-side user_sessions.
 22. `supabase/migrations/20261114_task19_single_source_of_truth.sql`
     - TASK 19 Single Source of Truth: Canonical `schedules`, `student_enrollments`, `token_wallets`, `token_ledger`, and `attendance`. Drops deprecated duplicate tables (`schedule_slots`, `schedule_students`, `bookings`, `hour_wallets`, `hour_ledger`). Adds `domain_events` transactional outbox table and `reconcile_token_ledger()` verification function. (Rollback: `20261114_task19_single_source_of_truth_rollback.sql`).
+23. `supabase/migrations/20261119_task21_client_fixes_fees_zelle.sql`
+    - TASK 21 Client Meeting Fixes, Fee Dues with Automatic Reminders, and Zelle Payments: Deployment parity tables (`courses.updated_at`, `schedules`, `daily_job_claims`, `student_enrollments.starts_on`), duplicate guarantees (`profiles.lower(email)` and `student_parents`), 1-to-1 `student_exam_dates`, and `fee_dues` with `fee_due_claims` and Zelle configuration in `institute_settings`. (Rollback: `20261119_task21_client_fixes_fees_zelle_rollback.sql`).
 
 ---
 
