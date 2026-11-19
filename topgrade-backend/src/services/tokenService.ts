@@ -95,9 +95,9 @@ export async function findStudent(idOrCode: string): Promise<StudentInfo | null>
   const mem = inMemoryStudentStore.find(s => s.id === key || s.studentCode === key);
   if (mem) {
     return {
-      id: mem.id,
-      name: mem.fullName,
-      code: mem.studentCode,
+      id: mem.id || key,
+      name: mem.fullName || "Student",
+      code: mem.studentCode || key,
       email: mem.email,
       parentEmails: mem.parentEmails || []
     };
