@@ -19,40 +19,8 @@ import { dispatchMultiChannelNotification } from "../services/notificationServic
 import { changeUserPassword, generateTemporaryPassword, emailSetPasswordLink, normEmail, isValidEmail } from "../services/studentAccounts.js";
 import { isRealEmail } from "../constants/domains.js";
 import { supabaseAdmin } from "../supabase.js";
-import {
-  previewParentDispatchService,
-  executeParentDispatchService
-} from "../services/parentDispatchService.js";
 
 const router = express.Router();
-
-/**
- * POST /api/students/parent-dispatch/preview
- * Previews parent credentials dispatch with sibling grouping, skip reasons, and counts.
- */
-router.post("/parent-dispatch/preview", async (req: express.Request, res: express.Response): Promise<any> => {
-  try {
-    const { scope = "ALL", studentIds, forceResend } = req.body || {};
-    const preview = await previewParentDispatchService({ scope, studentIds, forceResend });
-    return res.status(200).json({ success: true, data: preview });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, message: err.message || "Failed to preview parent dispatch." });
-  }
-});
-
-/**
- * POST /api/students/parent-dispatch/execute
- * Executes parent credentials dispatch throttled ~1/sec, logged to email_log.
- */
-router.post("/parent-dispatch/execute", async (req: express.Request, res: express.Response): Promise<any> => {
-  try {
-    const { scope = "ALL", studentIds, forceResend } = req.body || {};
-    const result = await executeParentDispatchService({ scope, studentIds, forceResend });
-    return res.status(200).json({ success: true, data: result });
-  } catch (err: any) {
-    return res.status(500).json({ success: false, message: err.message || "Failed to execute parent dispatch." });
-  }
-});
 
 /**
  * POST /api/students/:id/send-parent-credentials & POST /api/students/send-parent-credentials

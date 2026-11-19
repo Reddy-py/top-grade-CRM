@@ -132,30 +132,15 @@ CREATE TABLE IF NOT EXISTS public.fee_dues (
     currency TEXT DEFAULT 'USD',
     due_date DATE NOT NULL,
     status TEXT NOT NULL DEFAULT 'UPCOMING', -- 'UPCOMING', 'REMINDED_1', 'REMINDED_2', 'PAID', 'WAIVED', 'CANCELLED', 'OVERDUE'
-    invoice_ref TEXT UNIQUE NOT NULL,       -- TG-YYYYMM-XXXX or TG-XXXXXX
+    invoice_ref TEXT UNIQUE NOT NULL,       -- TG-YYYYMM-XXXX
     notes TEXT,
     paid_at TIMESTAMPTZ,
     payment_method TEXT,                    -- 'zelle', 'bank_transfer_neft', 'cash', 'cheque', 'other'
     bank_reference TEXT,
-    hours_included NUMERIC DEFAULT 0,
     hours_credited NUMERIC DEFAULT 0,
-    hourly_rate_cents INTEGER DEFAULT 0,
-    reminder_1_at TIMESTAMPTZ,
-    reminder_2_at TIMESTAMPTZ,
-    receipt_no TEXT,
-    unpaid_reason TEXT,
-    created_by TEXT,
     created_at TIMESTAMPTZ DEFAULT now(),
     updated_at TIMESTAMPTZ DEFAULT now()
 );
-
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS hours_included NUMERIC DEFAULT 0;
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS hourly_rate_cents INTEGER DEFAULT 0;
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS reminder_1_at TIMESTAMPTZ;
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS reminder_2_at TIMESTAMPTZ;
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS receipt_no TEXT;
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS unpaid_reason TEXT;
-ALTER TABLE public.fee_dues ADD COLUMN IF NOT EXISTS created_by TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_fee_dues_student ON public.fee_dues(student_id);
 CREATE INDEX IF NOT EXISTS idx_fee_dues_status ON public.fee_dues(status);
@@ -335,3 +320,4 @@ CREATE POLICY fee_due_claims_parent_insert_read ON public.fee_due_claims
     WITH CHECK (lower(trim(parent_email)) = lower(trim(auth.jwt() ->> 'email')));
 
 COMMIT;
+
