@@ -54,6 +54,8 @@ For a fresh Supabase database or a schema reset (`npm run reset:supabase`), exec
     - TASK 19 Single Source of Truth: Canonical `schedules`, `student_enrollments`, `token_wallets`, `token_ledger`, and `attendance`. Drops deprecated duplicate tables (`schedule_slots`, `schedule_students`, `bookings`, `hour_wallets`, `hour_ledger`). Adds `domain_events` transactional outbox table and `reconcile_token_ledger()` verification function. (Rollback: `20261114_task19_single_source_of_truth_rollback.sql`).
 23. `supabase/migrations/20261119_task21_client_fixes_fees_zelle.sql`
     - TASK 21 Client Meeting Fixes, Fee Dues with Automatic Reminders, and Zelle Payments: Deployment parity tables (`courses.updated_at`, `schedules`, `daily_job_claims`, `student_enrollments.starts_on`), duplicate guarantees (`profiles.lower(email)` and `student_parents`), 1-to-1 `student_exam_dates`, and `fee_dues` with `fee_due_claims` and Zelle configuration in `institute_settings`. (Rollback: `20261119_task21_client_fixes_fees_zelle_rollback.sql`).
+24. `supabase/migrations/20261120_task22_automated_zelle_and_admissions.sql`
+    - TASK 22 Automated Zelle payments, low-hours & payment reminders, admissions automations, one payable object (`payment_requests`), `payer_aliases`, `bank_transactions`, `automation_previews`, `automation_claims`, `low_hours_crossings`, `trial_bookings`, and `waitlist_entries`. (Rollback: `20261120_task22_automated_zelle_and_admissions_rollback.sql`).
 
 ---
 
