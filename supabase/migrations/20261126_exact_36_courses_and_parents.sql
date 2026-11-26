@@ -23,7 +23,7 @@ BEGIN
     SELECT
       student_id,
       course_id,
-      GREATEST(0, COALESCE(SUM(hours), 0))::numeric(10, 2) AS available_tokens
+      GREATEST(0, COALESCE(SUM(hours), 0))::numeric(6, 2) AS available_tokens
     FROM public.token_ledger
     WHERE expires_at IS NULL OR expires_at > now()
     GROUP BY student_id, course_id;
@@ -139,9 +139,24 @@ INSERT INTO _exact_36_courses (ord, course_name, category) VALUES
 -- Clean up dependent rows for any courses NOT in the 36-course list
 DO $$
 DECLARE
-  del_ids UUID[];
+  del_ids TEXT[];
+  tbl TEXT;
+  child_course_tables TEXT[] := ARRAY[
+    'course_packages',
+    'teacher_course_assignments',
+    'student_enrollments',
+    'schedules',
+    'schedule_slots',
+    'token_wallets',
+    'token_ledger',
+    'token_orders',
+    'attendance',
+    'attendance_records',
+    'fees',
+    'waitlist_entries'
+  ];
 BEGIN
-  SELECT ARRAY_AGG(id) INTO del_ids
+  SELECT ARRAY_AGG(id::text) INTO del_ids
   FROM public.courses c
   WHERE NOT EXISTS (
     SELECT 1 FROM _exact_36_courses e
@@ -149,37 +164,38 @@ BEGIN
   );
 
   IF del_ids IS NOT NULL AND array_length(del_ids, 1) > 0 THEN
-    IF to_regclass('public.course_packages') IS NOT NULL THEN
-      DELETE FROM public.course_packages WHERE course_id = ANY(del_ids);
-    END IF;
-    IF to_regclass('public.teacher_course_assignments') IS NOT NULL THEN
-      DELETE FROM public.teacher_course_assignments WHERE course_id = ANY(del_ids);
-    END IF;
-    IF to_regclass('public.student_enrollments') IS NOT NULL THEN
-      DELETE FROM public.student_enrollments WHERE course_id = ANY(del_ids);
-    END IF;
-    IF to_regclass('public.schedules') IS NOT NULL THEN
-      DELETE FROM public.schedules WHERE course_id = ANY(del_ids);
-    END IF;
-    IF to_regclass('public.token_wallets') IS NOT NULL THEN
-      DELETE FROM public.token_wallets WHERE course_id = ANY(del_ids);
-    END IF;
-    DELETE FROM public.courses WHERE id = ANY(del_ids);
+    FOREACH tbl IN ARRAY child_course_tables LOOP
+      IF EXISTS (
+        SELECT 1
+        FROM information_schema.columns
+        WHERE table_schema = 'public'
+          AND table_name = tbl
+          AND column_name = 'course_id'
+      ) THEN
+        EXECUTE format(
+          'DELETE FROM public.%I WHERE course_id::text = ANY($1);',
+          tbl
+        ) USING del_ids;
+      END IF;
+    END LOOP;
+
+    DELETE FROM public.courses WHERE id::text = ANY(del_ids);
   END IF;
 END $$;
 
--- Insert any of the 36 courses not yet in public.courses
+-- Temporarily clear existing course_code values to avoid unique constraint collisions during renumbering
+UPDATE public.courses
+SET course_code = '__TMP__' || id::text;
+
+-- Insert any of the 36 courses not yet in public.courses (core columns only)
 INSERT INTO public.courses (
   name,
   course_code,
-  category,
+  required_teacher_skills,
   description,
-  hourly_rate,
+  duration,
   fee,
-  pricing_model,
-  duration_months,
-  package_hours,
-  package_price,
+  max_students,
   status
 )
 SELECT
@@ -187,12 +203,9 @@ SELECT
   'TGC' || LPAD(e.ord::text, 3, '0'),
   e.category,
   e.course_name || ' — Continuous Track ($1/hr token)',
+  'Continuous (No End Date)',
   1,
-  1,
-  'HOURLY_CREDIT_PACKAGE',
-  NULL,
-  NULL,
-  NULL,
+  20,
   'Active'
 FROM _exact_36_courses e
 WHERE NOT EXISTS (
@@ -204,15 +217,28 @@ UPDATE public.courses c
 SET
   name = e.course_name,
   course_code = 'TGC' || LPAD(e.ord::text, 3, '0'),
-  category = e.category,
-  hourly_rate = 1,
+  required_teacher_skills = e.category,
+  duration = 'Continuous (No End Date)',
   fee = 1,
-  pricing_model = 'HOURLY_CREDIT_PACKAGE',
-  duration_months = NULL,
-  package_hours = NULL,
-  package_price = NULL,
   status = 'Active'
 FROM _exact_36_courses e
 WHERE LOWER(TRIM(c.name)) = LOWER(TRIM(e.course_name));
+
+-- Safely apply optional package/hourly columns only if present in schema
+DO $$
+BEGIN
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'courses' AND column_name = 'hourly_rate') THEN
+    UPDATE public.courses SET hourly_rate = 1;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'courses' AND column_name = 'duration_months') THEN
+    UPDATE public.courses SET duration_months = NULL;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'courses' AND column_name = 'package_hours') THEN
+    UPDATE public.courses SET package_hours = NULL;
+  END IF;
+  IF EXISTS (SELECT 1 FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'courses' AND column_name = 'package_price') THEN
+    UPDATE public.courses SET package_price = NULL;
+  END IF;
+END $$;
 
 COMMIT;
